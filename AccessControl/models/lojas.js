@@ -10,6 +10,5 @@ const lojas = connection.define('lojas',{
 
 
 //lojas.sync({force: true});
-//Teste para o Git_Hub
+
 module.exports = lojas;
-console.log("Teste");
