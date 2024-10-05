@@ -10,6 +10,12 @@ const registro_chave = connection.define('registros_chave',{
     },
     rchave_telefone:{
         type:Sequelize.STRING(15)
+    },
+    rchave_motivo:{
+        type:Sequelize.TEXT('long')
+    },
+    rchave_observacao:{
+        type:Sequelize.TEXT('long')
     }
 });
 
