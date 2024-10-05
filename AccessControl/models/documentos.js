@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 const connection = require('../database/database');
 
-const Entregas = require('../models/entregas');
-const Servico = require('../models/servicos');
+const entregas = require('../models/entregas');
+const servico = require('../models/servicos');
 
-const Documentos = connection.define('documentos',{
+const documentos = connection.define('documentos',{
     doc_cnh:{
         type: Sequelize.CHAR(11),
         allowNull: false,
@@ -25,9 +25,8 @@ const Documentos = connection.define('documentos',{
     }
 });
 
-Documentos.belongsTo(Entregas);
-Documentos.belongsTo(Servico);
-
+documentos.belongsTo(entregas);
+documentos.belongsTo(servico);
 
 //Documentos.sync({force: true});
 
