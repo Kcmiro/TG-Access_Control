@@ -29,6 +29,6 @@ Documentos.belongsTo(Entregas);
 Documentos.belongsTo(Servico);
 
 
-//documentos.sync({force: true});
+//Documentos.sync({force: true});
 
-module.exports = documentos;
+module.exports = Documentos;
