@@ -8,7 +8,7 @@ const servico = connection.define('servico',{
         allowNull: false
     },
     servico_descricao:{
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT('long'),
         allowNull: true
     }
 });

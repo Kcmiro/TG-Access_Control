@@ -21,6 +21,6 @@ const registro_chave = connection.define('registros_chave',{
 
 registro_chave.belongsTo(chaves);
 
-//registro_chaves.sync({force: true});
+//registro_chave.sync({force: true});
 
 module.exports = registro_chave;

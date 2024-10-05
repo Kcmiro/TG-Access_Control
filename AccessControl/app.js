@@ -9,7 +9,16 @@ const connection = require('./database/database');
 
 //Criando Tabelas e colunas
 const usuario = require('./models/usuario');
-
+const entregas = require('./models/entregas');
+const servico = require('./models/servicos');
+const bicicletario = require('./models/bicicletario');
+const chaves = require('./models/chaves');
+const lojas = require('./models/lojas');
+const veiculos = require('./models/veiculos');
+const documentos = require('./models/documentos');
+const telefone = require('./models/telefone');
+const registro_chaves = require('./models/registro_chave');
+const registro_patio = require('./models/registro_patio');
 
 const app = express();
 
