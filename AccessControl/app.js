@@ -7,6 +7,8 @@ const express = require('express');
 //Modulos do Projeto
 const connection = require('./database/database');
 
+//Criando Tabelas e colunas
+const usuario = require('./models/usuario');
 
 
 const app = express();
