@@ -3,6 +3,7 @@ const path = require('path');
 
 //Módulos Externos
 const express = require('express');
+const session = require('express-session');
 
 //Modulos do Projeto
 const connection = require('./database/database');
@@ -22,6 +23,15 @@ const registro_patio = require('./models/registro_patio');
 
 const app = express();
 
+// Sessão
+app.use(session({
+    secret: 'Controle',
+    cookie: {
+        maxAge: 2400000,
+    },
+    resave: true,
+    saveUnitialized: false,
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
