@@ -30,7 +30,7 @@ app.use(session({
         maxAge: 2400000,
     },
     resave: true,
-    saveUnitialized: false,
+    saveUnitialized: false
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
