@@ -21,7 +21,7 @@ const documentos = connection.define('documentos',{
     doc_empresa: {
         type: Sequelize.STRING,
         allowNull: false,
-        allowNull: true
+        
     }
 });
 
