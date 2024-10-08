@@ -1,0 +1,41 @@
+<%- include('./partials/header.ejs') %>
+<div class="container">
+  <div
+    class="card position-absolute top-50 start-50 translate-middle"
+    style="width: 18rem"
+  >
+    <div class="card-header bg-primary text-white font-weight-bold">Login</div>
+    <div class="card-body">
+      <form method="post" action="/usuario/login">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="nome"
+            class="form-control"
+            id="nome"
+            placeholder="Digite o nome de usuario"
+          />
+          <label for="nome">Digite o nome de usuario</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            name="senha"
+            class="form-control"
+            id="senha"
+            placeholder="Digite a senha"
+          />
+          <label for="senha">Digite a senha</label>
+        </div>
+        <br />
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <% if( msg != '') { %>
+        <div class="d-grid gap-2 col-6 mx-auto"><%= msg %></div>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('./partials/rodape.ejs') %>
