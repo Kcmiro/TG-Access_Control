@@ -22,7 +22,8 @@ const registro_chaves = require("./models/registro_chave");
 const registro_patio = require("./models/registro_patio");
 
 //Rotas
-const genericasROute = require("./routes/genericasRoute");
+const genericasRoute = require("./routes/genericasRoute");
+const usuarioRoute = require("./routes/usuariosRoute");
 
 const app = express();
 
@@ -59,6 +60,7 @@ connection
 
 //Ativando as rotas
 
-app.use("/", genericasROute);
+app.use("/", genericasRoute);
+app.use("/usuario", usuarioRoute);
 
 module.exports = app;
