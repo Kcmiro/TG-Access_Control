@@ -1,73 +1,79 @@
-const express = require ('express');
-const bcrypt = require ('bcryptjs');
+const express = require("express");
+const bcrypt = require("bcryptjs");
 
-const usuario = require('../models/usuario');
-const { where } = require('sequelize');
+const usuario = require("../models/usuario");
+const { where } = require("sequelize");
 
+exports.mostrarCadastro = (req, res, next) => {
+  res.render("cadastrousuario", { msg: "" });
+};
 exports.create = (req, res, next) => {
-    const nome = req.body.nome;
-    const senha = req.body.senha;
-    const nivel = req.body.nivel;
+  const nome = req.body.nome;
+  const senha = req.body.senha;
+  const nivel = req.body.nivel;
 
+  if (nome == "" || senha == "") {
+    res.render("cadastrousuario", { msg: "Preencha todos os campos" });
+  } else {
     let salt = bcrypt.genSaltSync(10);
-    let senhacriptografada = bcrypt(senha, salt);
-    
-    usuario.findOne({
+    let senhacriptografada = bcrypt.hashSync(senha, salt);
+    usuario
+      .findOne({
         where: {
-            usuario_nome: nome
+          usuario_nome: nome,
+        },
+      })
+      .then((Usuario) => {
+        if (Usuario == undefined) {
+          usuario
+            .create({
+              usuario_nome: nome,
+              usuario_senha: senhacriptografada,
+              usuario_nivel: nivel,
+            })
+            .then((resultado) => {
+              res.render("login", { msg: "" });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.render("cadastrousuario", { msg: err });
+            });
+        } else {
+          res.render("cadastrousuario", { msg: "USUARIO JÁ CADASTRADO!!!" });
         }
-    }).then(Usuario =>{
-        if(Usuario == undefined)
-            {
-                usuario.create({
-                    usuario_nome: nome,
-                    usuario_senha: senhacriptografada,
-                    usuario_nivel: nivel
-                }).then(resultado =>{
-                    res.end('USUARIO CRIADO COM SUCESSO!!!');
-                }).catch(err => {
-                    console.log(err);
-                    res.end('Erro!');
-                })
-            }
-            else
-            {
-                res.end('USUARIO JÁ EXISTE!!!')
-            }
-    })
-}
+      });
+  }
+};
 
 exports.login = (req, res, next) => {
-    var nome = req.body.nome;
-    var senha = req.body.senha;
-    
-    usuario.findOne({
-        where: {
-            usuario_nome: nome
-        }
-    }).then(Usuario =>{
-        if(Usuario != undefined)
-        {
-            let usuario_logado = bcrypt.compareSync(senha, Usuario.usuario_senha)
+  var nome = req.body.nome;
+  var senha = req.body.senha;
 
-            if(usuario_logado)
-            {
-                req.session.Usuario = {
-                    id: Usuario.id,
-                    nome: Usuario.usuario_nome
-                }
+  usuario
+    .findOne({
+      where: {
+        usuario_nome: nome,
+      },
+    })
+    .then((Usuario) => {
+      if (Usuario != undefined) {
+        let usuario_logado = bcrypt.compareSync(senha, Usuario.usuario_senha);
 
-                res.end('logado!!!');
-            }
-            else
-            {
-                req.end('Usuario ou senha não correspondente');
-            }
+        if (usuario_logado) {
+          req.session.Usuario = {
+            id: Usuario.id,
+            nome: Usuario.usuario_nome,
+          };
+          res.redirect("/");
+        } else {
+          req.render("login", { msg: "USUARIO OU SENHA INVALIDO" });
         }
-        else
-        {
-            req.end('Usuario ou senha não correspondente');
-        }
+      } else {
+        req.render("login", { msg: "USUARIO OU SENHA INVALIDO" });
+      }
     });
+};
 
-}
+exports.mostrarlogin = (req, res, next) => {
+  res.render("login", { msg: "" });
+};
