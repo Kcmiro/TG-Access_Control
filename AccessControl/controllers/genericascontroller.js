@@ -1,5 +1,5 @@
 exports.home = (req, res, next) => {
-  if (!req.session.usuario) {
+  if (!req.session.Usuario) {
     res.render("login", { msg: "" });
   } else {
     res.render("index");

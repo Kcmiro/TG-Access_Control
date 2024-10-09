@@ -64,12 +64,12 @@ exports.login = (req, res, next) => {
             id: Usuario.id,
             nome: Usuario.usuario_nome,
           };
-          res.redirect("/");
+          res.redirect('/');
         } else {
-          req.render("login", { msg: "USUARIO OU SENHA INVALIDO" });
+          res.render('login', { msg: 'USUARIO OU SENHA INVALIDO' });
         }
       } else {
-        req.render("login", { msg: "USUARIO OU SENHA INVALIDO" });
+        res.render('login', { msg: 'USUARIO OU SENHA INVALIDO' });
       }
     });
 };
