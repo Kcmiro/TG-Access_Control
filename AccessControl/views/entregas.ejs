@@ -1,0 +1,100 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container">
+  <div class="card position-absolute top-50 start-50 translate-middle col-10">
+    <div class="card-header bg-primary text-white font-weight-bold">
+      CADASTRO DE ENTREGA
+    </div>
+    <div class="card-body">
+      <form method="post" action="/entregas">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="entregas_nome"
+            class="form-control"
+            id="entregas_nome"
+            placeholder="Digite o nome da entrega"
+            required
+          />
+          <label for="entregas_nome">Digite o nome da entrega</label>
+        </div>
+        <div class="form-floating mb-3">
+          <textarea
+            name="entregas_descricao"
+            class="form-control"
+            id="entregas_descricao"
+            placeholder="Digite a descrição"
+            required
+          ></textarea>
+          <label for="entregas_descricao">Digite a descrição</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="veiculo_placa"
+            class="form-control"
+            id="veiculo_placa"
+            placeholder="Digite a placa do veículo"
+            required
+          />
+          <label for="veiculo_placa">Digite a placa do veículo</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="veiculo_modelo"
+            class="form-control"
+            id="veiculo_modelo"
+            placeholder="Digite o modelo do veículo"
+            required
+          />
+          <label for="veiculo_modelo">Digite o modelo do veículo</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="telefone"
+            class="form-control"
+            id="telefone"
+            placeholder="Digite o telefone"
+            required
+          />
+          <label for="telefone">Digite o telefone</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="cnh"
+            class="form-control"
+            id="cnh"
+            placeholder="Digite o número da CNH"
+            required
+          />
+          <label for="cnh">Digite o número da CNH</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="empresa"
+            class="form-control"
+            id="empresa"
+            placeholder="Digite o nome da empresa"
+            required
+          />
+          <label for="empresa">Digite o nome da empresa</label>
+        </div>
+        <br />
+        <div class="d-grid col-6 mx-auto">
+          <button type="submit" class="btn btn-primary">
+            Cadastrar Entrega
+          </button>
+        </div>
+        <% if (msg != '') { %>
+        <div class="alert alert-danger" role="alert"><%= msg %></div>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>

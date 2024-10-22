@@ -24,6 +24,7 @@ const registro_patio = require("./models/registro_patio");
 //Rotas
 const genericasRoute = require("./routes/genericasRoute");
 const usuarioRoute = require("./routes/usuariosRoute");
+const entregasRoute = require("./routes/entregasroute");
 
 const app = express();
 
@@ -62,5 +63,6 @@ connection
 
 app.use("/", genericasRoute);
 app.use("/usuario", usuarioRoute);
+app.use("/entregas", entregasRoute);
 
 module.exports = app;

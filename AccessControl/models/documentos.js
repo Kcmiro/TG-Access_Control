@@ -1,28 +1,26 @@
-const Sequelize = require('sequelize');
-const connection = require('../database/database');
+const Sequelize = require("sequelize");
+const connection = require("../database/database");
 
-const entregas = require('../models/entregas');
-const servico = require('../models/servicos');
+const entregas = require("../models/entregas");
+const servico = require("../models/servicos");
 
-const documentos = connection.define('documentos',{
-    doc_cnh:{
-        type: Sequelize.CHAR(11),
-        allowNull: false,
-        unique: true
-        
-    },
+const documentos = connection.define("documentos", {
+  doc_cnh: {
+    type: Sequelize.CHAR(11),
+    allowNull: false,
+    unique: true,
+  },
 
-    doc_cnh:{
-        type: Sequelize.CHAR(11),
-        allowNull: false,
-        unique: true
-    },
+  doc_cnh: {
+    type: Sequelize.CHAR(11),
+    allowNull: false,
+    unique: true,
+  },
 
-    doc_empresa: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        
-    }
+  doc_empresa: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 documentos.belongsTo(entregas);
