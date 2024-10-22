@@ -226,7 +226,7 @@ exports.getOne = async (req, res, next) => {
   const { id } = req.params;
 
   if (!id) {
-    return res.status(400).json({ mensagem: "ID não fornecido" });
+    res.render("entregas", { msg: "ID Não Fornecido" });
   }
 
   try {
@@ -248,10 +248,11 @@ exports.getOne = async (req, res, next) => {
     });
 
     if (!entrega) {
-      return res.status(404).json({ mensagem: "Entrega não encontrada" });
+      res.render("entregas", { msg: "Entrega não encontrada" });
     }
 
-    res.status(200).json({
+    res.render("entregas", {
+      msg: "Preencha todos os campos",
       mensagem: "Entrega encontrada com sucesso",
       entrega: {
         id: entrega.id,
@@ -274,7 +275,7 @@ exports.getOne = async (req, res, next) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ mensagem: "Erro ao buscar entrega" });
+    res.render("entregas", { msg: "Erro ao buscar entregas" });
   }
 };
 
@@ -298,7 +299,7 @@ exports.getAll = async (req, res, next) => {
     });
 
     if (entregas.length === 0) {
-      return res.status(404).json({ mensagem: "Nenhuma entrega encontrada" });
+      res.render("entregas", { msg: "Nenhuma entrega encontrada" });
     }
 
     const formattedEntregas = entregas.map((entrega) => ({
@@ -320,12 +321,13 @@ exports.getAll = async (req, res, next) => {
       telefone: entrega.telefone ? entrega.telefone.telefone : null,
     }));
 
-    res.status(200).json({
+    res.render("entregas", {
+      msg: "Preencha todos os campos",
       mensagem: "Entregas encontradas com sucesso",
       entregas: formattedEntregas,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ mensagem: "Erro ao buscar entregas" });
+    res.render("entregas", { msg: "Erro ao busca entragas" });
   }
 };
