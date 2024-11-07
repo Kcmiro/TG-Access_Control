@@ -19,16 +19,6 @@
           <label for="entregas_nome">Nome do Entregador</label>
         </div>
         <div class="form-floating mb-3">
-          <textarea
-            name="entregas_descricao"
-            class="form-control"
-            id="entregas_descricao"
-            placeholder="Digite a descrição"
-            required
-          ></textarea>
-          <label for="entregas_descricao">Descrição</label>
-        </div>
-        <div class="form-floating mb-3">
           <input
             type="text"
             name="veiculo_placa"
@@ -64,30 +54,39 @@
         <div class="form-floating mb-3">
           <input
             type="text"
-            name="cnh"
+            name="doc_cpf"
             class="form-control"
-            id="cnh"
-            placeholder="CNH"
+            id="doc_cpf"
+            placeholder="CPF"
             required
           />
-          <label for="cnh">CNH</label>
+          <label for="doc_cpf">CPF</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="text"
-            name="empresa"
+            name="doc_cnh"
             class="form-control"
-            id="empresa"
-            placeholder="Digite o nome da empresa"
+            id="doc_cnh"
+            placeholder="CNH"
+            required
+          />
+          <label for="doc_cnh">CNH</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            name="doc_empresa"
+            class="form-control"
+            id="doc_empresa"
+            placeholder="Empresa"
             required
           />
           <label for="empresa">Empresa</label>
         </div>
         <br />
         <div class="d-grid col-6 mx-auto">
-          <button type="submit" class="btn btn-primary">
-            Cadastrar Entrega
-          </button>
+          <button type="submit" class="btn btn-primary">Incluir</button>
         </div>
         <% if (msg != '') { %>
         <div class="alert alert-danger" role="alert"><%= msg %></div>

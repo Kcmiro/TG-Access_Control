@@ -7,9 +7,9 @@ const Telefone = require("../models/telefone");
 exports.create = async (req, res, next) => {
   const {
     entregas_nome,
-    entregas_descricao,
-    veiculo_placa,
-    veiculo_modelo,
+    veiculos_placa,
+    veiculos_modelo,
+    doc_cpf,
     doc_cnh,
     doc_empresa,
     telefone,
@@ -17,9 +17,9 @@ exports.create = async (req, res, next) => {
 
   if (
     !entregas_nome ||
-    !entregas_descricao ||
-    !veiculo_placa ||
-    !veiculo_modelo ||
+    !veiculos_placa ||
+    !veiculos_modelo ||
+    !doc_cpf ||
     !doc_cnh ||
     !doc_empresa ||
     !telefone
@@ -34,6 +34,11 @@ exports.create = async (req, res, next) => {
       res.render("entregas", { msg: "Este número de telefone já existe" });
       return res.status(400).json({ mensagem: "" });
     }
+    // Verificar se o CPF já existe
+    const existingCPF = await Documentos.findOne({ where: { doc_cpf } });
+    if (existingCPF) {
+      res.render("entregas", { msg: "Este número de CPF já existe" });
+    }
 
     // Verificar se o CNH já existe
     const existingCNH = await Documentos.findOne({ where: { doc_cnh } });
@@ -43,23 +48,22 @@ exports.create = async (req, res, next) => {
 
     // Verificar se a placa do veículo já existe
     const existingVeiculo = await Veiculos.findOne({
-      where: { placa: veiculo_placa },
+      where: { placa: veiculos_placa },
     });
     if (existingVeiculo) {
       res.render("entregas", { msg: "Placa já cadastrada" });
     }
 
     // Criar veículo
-    const veiculo = await Veiculos.create({
-      placa: veiculo_placa,
-      modelo: veiculo_modelo,
+    const veiculos = await Veiculos.create({
+      placa: veiculos_placa,
+      modelo: veiculos_modelo,
     });
 
     // Criar entrega
     const entrega = await Entregas.create({
       entregas_nome,
-      entregas_descricao,
-      veiculoId: veiculo.id,
+      veiculoId: veiculos.id,
     });
 
     // Criar documento
@@ -94,11 +98,11 @@ exports.update = async (req, res, next) => {
 
     entregas_nome,
 
-    entregas_descricao,
+    veiculos_placa,
 
-    veiculo_placa,
+    veiculos_modelo,
 
-    veiculo_modelo,
+    doc_cpf,
 
     doc_cnh,
 
@@ -110,9 +114,9 @@ exports.update = async (req, res, next) => {
   if (
     !id ||
     !entregas_nome ||
-    !entregas_descricao ||
-    !veiculo_placa ||
-    !veiculo_modelo ||
+    !veiculos_placa ||
+    !veiculos_modelo ||
+    !doc_cpf ||
     !doc_cnh ||
     !doc_empresa ||
     !telefone
@@ -131,19 +135,17 @@ exports.update = async (req, res, next) => {
 
     await entrega.update({
       entregas_nome,
-
-      entregas_descricao,
     });
 
     // Atualizar veículo
 
-    const veiculo = await Veiculos.findOne({ where: { entregaId: id } });
+    const veiculos = await Veiculos.findOne({ where: { entregaId: id } });
 
     if (veiculo) {
-      await veiculo.update({
-        placa: veiculo_placa,
+      await veiculos.update({
+        placa: veiculos_placa,
 
-        modelo: veiculo_modelo,
+        modelo: veiculos_modelo,
       });
     }
 
@@ -174,7 +176,7 @@ exports.update = async (req, res, next) => {
 
       entrega,
 
-      veiculo,
+      veiculos,
 
       documento,
 
@@ -234,7 +236,7 @@ exports.getOne = async (req, res, next) => {
       include: [
         {
           model: Veiculos,
-          as: "veiculo",
+          as: "veiculos",
         },
         {
           model: Documentos,
@@ -257,15 +259,15 @@ exports.getOne = async (req, res, next) => {
       entrega: {
         id: entrega.id,
         entregas_nome: entrega.entregas_nome,
-        entregas_descricao: entrega.entregas_descricao,
-        veiculo: entrega.veiculo
+        veiculos: entrega.veiculos
           ? {
-              placa: entrega.veiculo.placa,
-              modelo: entrega.veiculo.modelo,
+              placa: entrega.veiculos.placa,
+              modelo: entrega.veiculos.modelo,
             }
           : null,
         documento: entrega.documento
           ? {
+              doc_cpf: entrega.documento.doc_cpf,
               doc_cnh: entrega.documento.doc_cnh,
               doc_empresa: entrega.documento.doc_empresa,
             }
@@ -285,7 +287,7 @@ exports.getAll = async (req, res, next) => {
       include: [
         {
           model: Veiculos,
-          as: "veiculo",
+          as: "veiculos",
         },
         {
           model: Documentos,
@@ -305,15 +307,15 @@ exports.getAll = async (req, res, next) => {
     const formattedEntregas = entregas.map((entrega) => ({
       id: entrega.id,
       entregas_nome: entrega.entregas_nome,
-      entregas_descricao: entrega.entregas_descricao,
-      veiculo: entrega.veiculo
+      veiculos: entrega.veiculos
         ? {
-            placa: entrega.veiculo.placa,
-            modelo: entrega.veiculo.modelo,
+            placa: entrega.veiculos.placa,
+            modelo: entrega.veiculos.modelo,
           }
         : null,
       documento: entrega.documento
         ? {
+            doc_cpf: entrega.documento.doc_cpf,
             doc_cnh: entrega.documento.doc_cnh,
             doc_empresa: entrega.documento.doc_empresa,
           }
@@ -328,6 +330,6 @@ exports.getAll = async (req, res, next) => {
     });
   } catch (error) {
     console.error(error);
-    res.render("entregas", { msg: "Erro ao busca entragas" });
+    res.render("entregas", { msg: "Erro ao busca entregas" });
   }
 };

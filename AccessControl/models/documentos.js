@@ -5,7 +5,7 @@ const entregas = require("../models/entregas");
 const servico = require("../models/servicos");
 
 const documentos = connection.define("documentos", {
-  doc_cnh: {
+  doc_cpf: {
     type: Sequelize.CHAR(11),
     allowNull: false,
     unique: true,
@@ -26,6 +26,6 @@ const documentos = connection.define("documentos", {
 documentos.belongsTo(entregas);
 documentos.belongsTo(servico);
 
-//documentos.sync({force: true});
+//documentos.sync({ force: true });
 
 module.exports = documentos;
