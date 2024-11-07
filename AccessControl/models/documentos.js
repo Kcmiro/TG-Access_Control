@@ -26,6 +26,6 @@ const documentos = connection.define("documentos", {
 documentos.belongsTo(entregas);
 documentos.belongsTo(servico);
 
-//documentos.sync({force: true});
+//documentos.sync({ force: true });
 
 module.exports = documentos;
