@@ -1,9 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const entregas = require("../models/entregas");
-const servico = require("../models/servicos");
-
 const veiculos = connection.define("veiculos", {
   veiculos_placa: {
     type: Sequelize.CHAR(7),
@@ -15,9 +12,6 @@ const veiculos = connection.define("veiculos", {
     allowNull: false,
   },
 });
-
-veiculos.belongsTo(entregas);
-veiculos.belongsTo(servico);
 
 //veiculos.sync({ force: true });
 

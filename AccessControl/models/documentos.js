@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const entregas = require("../models/entregas");
 const servico = require("../models/servicos");
 
 const documentos = connection.define("documentos", {
@@ -23,7 +22,6 @@ const documentos = connection.define("documentos", {
   },
 });
 
-documentos.belongsTo(entregas);
 documentos.belongsTo(servico);
 
 //documentos.sync({ force: true });

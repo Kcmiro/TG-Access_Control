@@ -1,6 +1,10 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
+const veiculos = require("./veiculos");
+const telefone = require("./telefone");
+const documentos = require("./documentos");
+
 const entregas = connection.define("entregas", {
   entregas_nome: {
     type: Sequelize.STRING,
@@ -8,6 +12,10 @@ const entregas = connection.define("entregas", {
   },
 });
 
-//entregas.sync({force: true});
+entregas.belongsTo(veiculos);
+entregas.belongsTo(telefone);
+entregas.belongsTo(documentos);
+
+//entregas.sync({ force: true });
 
 module.exports = entregas;
