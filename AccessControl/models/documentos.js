@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const servico = require("../models/servicos");
-
 const documentos = connection.define("documentos", {
   doc_cpf: {
     type: Sequelize.CHAR(11),
@@ -21,8 +19,6 @@ const documentos = connection.define("documentos", {
     allowNull: false,
   },
 });
-
-documentos.belongsTo(servico);
 
 //documentos.sync({ force: true });
 
