@@ -35,29 +35,27 @@ exports.create = (req, res, next) => {
     Documentos.findOne({ where: { doc_cnh: doc_cnh } }), // Verifica CNH
     Documentos.findOne({ where: { doc_cpf: doc_cpf } }), // Verifica CPF
   ])
-    .then(
-      ([veiculoExistente, telefoneExistente, cnhExistente, cpfExistente]) => {
-        // Se não houver duplicidade, cria o veiculo, telefone, documento e serviço
-        return Promise.all([
-          // Cria os registros se não existirem
-          veiculoExistente ||
-            Veiculos.create({
-              veiculos_placa: veiculos_placa,
-              veiculos_modelo: veiculos_modelo,
-            }),
-          telefoneExistente ||
-            Telefones.create({
-              telefone: telefone,
-            }),
-          cnhExistente ||
-            Documentos.create({
-              doc_cnh: doc_cnh,
-              doc_cpf: doc_cpf,
-              doc_empresa: doc_empresa,
-            }),
-        ]);
-      }
-    )
+    .then(([veiculoExistente, telefoneExistente, docExistente]) => {
+      // Se não houver duplicidade, cria o veiculo, telefone, documento e serviço
+      return Promise.all([
+        // Cria os registros se não existirem
+        veiculoExistente ||
+          Veiculos.create({
+            veiculos_placa: veiculos_placa,
+            veiculos_modelo: veiculos_modelo,
+          }),
+        telefoneExistente ||
+          Telefones.create({
+            telefone: telefone,
+          }),
+        docExistente ||
+          Documentos.create({
+            doc_cnh: doc_cnh,
+            doc_cpf: doc_cpf,
+            doc_empresa: doc_empresa,
+          }),
+      ]);
+    })
     .then(([veiculo, tel, doc]) => {
       // Agora cria o serviço com as chaves estrangeiras
       return Servicos.create({
