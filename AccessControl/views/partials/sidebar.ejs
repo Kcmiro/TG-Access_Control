@@ -1,29 +1,90 @@
-<nav class="sidebar navbar navbar-dark bg-primary">
-  <a class="navbar-brand" href="/AccessControl/">AccessControl</a>
+<!-- Botão para abrir/fechar a sidebar -->
+<button
+  class="btn btn-primary"
+  id="sidebarToggle"
+  style="position: fixed; top: 20px; left: 20px; z-index: 9999"
+>
+  <i class="bi bi-list"></i>
+  <!-- Ícone de menu -->
+</button>
+
+<!-- Sidebar (a sidebar terá uma transição e será retrátil) -->
+<nav
+  id="sidebar"
+  class="sidebar navbar navbar-dark bg-primary p-3 fixed-top"
+  style="
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60px;
+    transition: all 0.3s ease;
+    z-index: 998;
+  "
+>
   <ul class="navbar-nav">
+    <a class="navbar-brand mb-4" href="/AccessControl/">AccessControl</a>
     <li class="nav-item">
-      <a href="/patio" class="nav-link">Pátio</a>
+      <a href="/patio" class="nav-link">
+        <i class="bi bi-house-door"></i>
+        <span class="d-none d-md-inline">Pátio</span>
+      </a>
     </li>
     <li class="nav-item">
-      <a href="/entregas" class="nav-link">Entregas</a>
+      <a href="/entregas" class="nav-link">
+        <i class="bi bi-truck"></i>
+        <span class="d-none d-md-inline">Entregas</span>
+      </a>
+    </li>
+    <li class="nav-item dropdown">
+      <a
+        href="#"
+        class="nav-link dropdown-toggle"
+        id="servicosDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="bi bi-tools"></i>
+        <span class="d-none d-md-inline">Serviço</span>
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
+        <li>
+          <a href="/servicos/criar" class="dropdown-item">Criar Serviço</a>
+        </li>
+        <li>
+          <a href="/servicos/listar" class="dropdown-item">Listar Serviços</a>
+        </li>
+      </ul>
     </li>
     <li class="nav-item">
-      <a href="/servicos" class="nav-link">Serviço</a>
+      <a href="/chaves" class="nav-link">
+        <i class="bi bi-key"></i> <span class="d-none d-md-inline">Chaves</span>
+      </a>
     </li>
     <li class="nav-item">
-      <a href="/chaves" class="nav-link">Chaves</a>
+      <a href="/bicicletario" class="nav-link">
+        <i class="bi bi-bicycle"></i>
+        <span class="d-none d-md-inline">Bicicletário</span>
+      </a>
     </li>
     <li class="nav-item">
-      <a href="/bicicletario" class="nav-link">Bicicletário</a>
+      <a href="/relatorio" class="nav-link">
+        <i class="bi bi-file-earmark-text"></i>
+        <span class="d-none d-md-inline">Relatório</span>
+      </a>
     </li>
     <li class="nav-item">
-      <a href="/relatorio" class="nav-link">Relatório</a>
+      <a href="/configuracoes" class="nav-link">
+        <i class="bi bi-gear"></i>
+        <span class="d-none d-md-inline">Configurações</span>
+      </a>
     </li>
     <li class="nav-item">
-      <a href="/configuracoes" class="nav-link">Configurações</a>
-    </li>
-    <li class="nav-item">
-      <a href="/sair" class="nav-link">Sair</a>
+      <a href="/sair" class="nav-link">
+        <i class="bi bi-box-arrow-right"></i>
+        <span class="d-none d-md-inline">Sair</span>
+      </a>
     </li>
   </ul>
 </nav>
+
+<!-- Conteúdo principal da página -->

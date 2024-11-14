@@ -1,5 +1,18 @@
-<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
-<div class="container">
-  <p>Sistema de Controle de Acesso</p>
+<!-- index.ejs -->
+<%- include('./partials/header.ejs') %>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <%- include('./partials/sidebar.ejs') %>
+
+    <!-- Conteúdo Principal -->
+    <div class="col-md-9 ml-auto" style="margin-top: 60px">
+      <div class="container">
+        <!-- Aqui vai o conteúdo principal da página -->
+        <h1>Bem-vindo ao AccessControl</h1>
+        <p>Conteúdo da página...</p>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include('./partials/rodape.ejs') %>
