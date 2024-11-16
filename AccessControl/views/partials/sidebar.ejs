@@ -1,90 +1,170 @@
-<!-- Botão para abrir/fechar a sidebar -->
-<button
-  class="btn btn-primary"
-  id="sidebarToggle"
-  style="position: fixed; top: 20px; left: 20px; z-index: 9999"
->
-  <i class="bi bi-list"></i>
-  <!-- Ícone de menu -->
-</button>
+<div class="d-flex justify-content-center ">
+  <a href="/AccessControl/" class="mt-2 mb-2">
+    <img src="/imagens/fontbolt.png" alt="Logo do AccessControl" class="img-fluid" style="max-width: 400px; height: auto;">
+  </a>
+</div>
 
-<!-- Sidebar (a sidebar terá uma transição e será retrátil) -->
-<nav
-  id="sidebar"
-  class="sidebar navbar navbar-dark bg-primary p-3 fixed-top"
-  style="
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 60px;
-    transition: all 0.3s ease;
-    z-index: 998;
-  "
->
-  <ul class="navbar-nav">
-    <a class="navbar-brand mb-4" href="/AccessControl/">AccessControl</a>
-    <li class="nav-item">
-      <a href="/patio" class="nav-link">
-        <i class="bi bi-house-door"></i>
-        <span class="d-none d-md-inline">Pátio</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/entregas" class="nav-link">
-        <i class="bi bi-truck"></i>
-        <span class="d-none d-md-inline">Entregas</span>
-      </a>
-    </li>
-    <li class="nav-item dropdown">
-      <a
-        href="#"
-        class="nav-link dropdown-toggle"
-        id="servicosDropdown"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <i class="bi bi-tools"></i>
-        <span class="d-none d-md-inline">Serviço</span>
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
-        <li>
-          <a href="/servicos/criar" class="dropdown-item">Criar Serviço</a>
-        </li>
-        <li>
-          <a href="/servicos/listar" class="dropdown-item">Listar Serviços</a>
-        </li>
-      </ul>
-    </li>
-    <li class="nav-item">
-      <a href="/chaves" class="nav-link">
-        <i class="bi bi-key"></i> <span class="d-none d-md-inline">Chaves</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/bicicletario" class="nav-link">
-        <i class="bi bi-bicycle"></i>
-        <span class="d-none d-md-inline">Bicicletário</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/relatorio" class="nav-link">
-        <i class="bi bi-file-earmark-text"></i>
-        <span class="d-none d-md-inline">Relatório</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/configuracoes" class="nav-link">
-        <i class="bi bi-gear"></i>
-        <span class="d-none d-md-inline">Configurações</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="/sair" class="nav-link">
-        <i class="bi bi-box-arrow-right"></i>
-        <span class="d-none d-md-inline">Sair</span>
-      </a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 14px">
+  <div class="border-bottom border-light mb-3"></div>
+ 
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse mx-auto" id="navbarNav">
+    <ul class="navbar-nav d-flex justify-content-center w-100">
+      <!-- Pátio -->
+      <li class="nav-item">
+        <a href="/patio" class="nav-link">Pátio</a>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Entregas -->
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          id="entregasMenu"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Entregas
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="entregasMenu">
+          <li>
+            <a href="/entregas/cadastrar" class="dropdown-item">Cadastrar</a>
+          </li>
+          <li>
+            <a href="/entregas/editar" class="dropdown-item">Editar/Excluir</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Serviços -->
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          id="servicosMenu"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Serviços
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="servicosMenu">
+          <li>
+            <a href="/servicos/cadastrar" class="dropdown-item">Cadastrar</a>
+          </li>
+          <li>
+            <a href="/servicos/editar" class="dropdown-item">Editar/Excluir</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Chaves -->
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          id="chavesDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Chaves
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="chavesDropdown">
+          <li>
+            <a href="/chaves/chaves" class="dropdown-item">Criar Chaves</a>
+          </li>
+          <li>
+            <a href="/chaves/registrochaves" class="dropdown-item">Empréstimo de Chaves</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Bicicletário -->
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          id="bicicletarioMenu"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Bicicletário
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="bicicletarioMenu">
+          <li>
+            <a href="/bicicletario/cadastrar" class="dropdown-item">Cadastrar</a>
+          </li>
+          <li>
+            <a href="/bicicletario/editar" class="dropdown-item">Editar/Excluir</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Relatório -->
+      <li class="nav-item">
+        <a href="/relatorio" class="nav-link">Relatório</a>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Configurações -->
+      <li class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          id="configuracoesMenu"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Configurações
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="configuracoesMenu">
+          <li>
+            <a href="/configuracoes/perfil" class="dropdown-item">Perfil</a>
+          </li>
+          <li>
+            <a href="/configuracoes/cadastrarusuario" class="dropdown-item">Cadastro de Usuário</a>
+          </li>
+          <li>
+            <a href="/configuracoes/editarusuario" class="dropdown-item">Editar/Excluir</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Divisória escura entre itens -->
+      <li class="nav-item border-start mx-3 border-dark"></li>
+
+      <!-- Sair -->
+      <li class="nav-item">
+        <a href="/sair" class="nav-link">Sair</a>
+      </li>
+    </ul>
+  </div>
 </nav>
 
-<!-- Conteúdo principal da página -->
