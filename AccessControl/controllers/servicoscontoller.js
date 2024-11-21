@@ -5,6 +5,7 @@ const Documentos = require("../models/documentos");
 const Telefones = require("../models/telefone");
 const { where } = require("sequelize");
 
+
 exports.create = (req, res, next) => {
   const servico_nome = req.body.servico_nome;
   const servico_descricao = req.body.servico_descricao;
@@ -25,7 +26,7 @@ exports.create = (req, res, next) => {
     !doc_cpf ||
     !doc_empresa
   ) {
-    return res.render("servicos", { msg: "Preencha todos os campos" });
+    return res.render("servicoscadastro", { msg: "Preencha todos os campos" });
   }
 
   // Verificando duplicidade antes de criar (agora verificando somente a combinação do serviço)
@@ -67,14 +68,14 @@ exports.create = (req, res, next) => {
       });
     })
     .then((servicocriado) => {
-      res.render("servicos", {
+      res.render("servicoscadastro", {
         msg: "Servico cadastrada com sucesso",
         servico: servicocriado,
       });
     })
     .catch((err) => {
       console.log(err);
-      res.render("servicos", { msg: "Erro ao cadastrar Servico" });
+      res.render("servicoscadastro", { msg: "Erro ao cadastrar Servico" });
     });
 };
 
