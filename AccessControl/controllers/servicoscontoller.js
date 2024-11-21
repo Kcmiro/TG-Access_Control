@@ -5,7 +5,9 @@ const Documentos = require("../models/documentos");
 const Telefones = require("../models/telefone");
 const { where } = require("sequelize");
 
-
+exports.mostrarServicos = (req, res, next) => {
+  res.render("servicoscadastro", { msg: "" });
+};
 exports.create = (req, res, next) => {
   const servico_nome = req.body.servico_nome;
   const servico_descricao = req.body.servico_descricao;
@@ -195,7 +197,7 @@ exports.getOne = (req, res, next) => {
   const id = req.params.id;
 
   Servicos.findByPk(id).then((servicos) => {
-    res.render("servicos", {
+    res.render("servicoscadastro", {
       mensagem: "Servicos encontrado",
       servicos: servicos,
     });
@@ -225,13 +227,13 @@ exports.getAll = (req, res, next) => {
     ],
   })
     .then((servicos) =>
-      res.render("servicos", {
+      res.render("servicoscadastro", {
         msg: "Servicos Encontrados",
         servicos: servicos,
       })
     )
     .catch((err) => {
       console.log(err);
-      res.render("servicos", { msg: "Erro ao buscar serviços" });
+      res.render("servicoscadastro", { msg: "Erro ao buscar serviços" });
     });
 };
