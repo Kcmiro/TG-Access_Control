@@ -1,12 +1,16 @@
-<%- include('./partials/header.ejs') %>
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
 <div class="container">
-  <div class="card position-absolute top-50 start-50 translate-middle col-10">
-    <div class="card-header bg-primary text-white font-weight-bold">
+  <div class="card position-absolute top-50 start-50 translate-middle col-3">
+    <div class="card-header bg-dark text-white font-weight-bold text-center">
       CADASTRO DE USUARIO
     </div>
     <div class="card-body">
-      <form method="post" action="/usuario/novousuario">
-        <div class="form-floating mb-3">
+      <form
+        method="post"
+        action="/usuario/novousuario"
+        class="d-flex flex-column align-items-center"
+      >
+        <div class="form-floating mb-3 w-75">
           <input
             type="text"
             name="nome"
@@ -14,9 +18,9 @@
             id="nome"
             placeholder="Digite o nome de usuario"
           />
-          <label for="nome">Digite o nome de usuario</label>
+          <label for="nome">Usuario</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 w-75">
           <input
             type="password"
             name="senha"
@@ -24,22 +28,22 @@
             id="senha"
             placeholder="Digite a senha"
           />
-          <label for="senha">Digite a senha</label>
+          <label for="senha">Senha</label>
         </div>
-        <div class="form-floating mb-3">
-          <label for="nivel">Nivel do usuario</label>
-          <select id="nivel" name="nivel">
-            <option value="OPERADOR">Operador</option>
-            <option value="ADM">Administrador</option>
-            <option value="CFTV">Monitoramento</option>
+        <div class="mb-3 w-75">
+          <label for="nivel" class="form-label">Nível de Acesso:</label>
+          <select id="nivel" name="nivel" class="form-select">
+            <option value="ADM">ADM</option>
+            <option value="CFTV">CFTV</option>
+            <option value="OPERADOR">OPERADOR</option>
           </select>
         </div>
-        <br />
-        <div class="d-grid col-6 mx-auto">
-          <button type="submit" class="btn btn-primary">Login</button>
+
+        <div class="d-grid col-4">
+          <button type="submit" class="btn btn-success">Cadastrar</button>
         </div>
-        <% if( msg != '') { %>
-        <div class="alert alert-danger" role="alert"><%= msg %></div>
+        <% if (msg != '') { %>
+        <div class="alert alert-danger mt-3" role="alert"><%= msg %></div>
         <% } %>
       </form>
     </div>
