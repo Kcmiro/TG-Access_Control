@@ -1,41 +1,86 @@
 <%- include('./partials/header.ejs') %>
-<div class="container">
+
+<div class="container-fluid vh-100 d-flex p-0">
+  <!-- Coluna da imagem -->
+  <div class="col-md-8 p-0">
+    <div
+      class="h-100"
+      style="
+        background-image: url('/imagens/faixada_buriti2.jpeg');
+        background-size: cover;
+        background-position: center;
+      "
+    ></div>
+  </div>
+
+  <!-- Coluna do formulário -->
   <div
-    class="card position-absolute top-50 start-50 translate-middle"
-    style="width: 18rem"
+    class="col-md-4 d-flex justify-content-center align-items-center bg-light p-4 flex-column"
   >
-    <div class="card-header bg-primary text-white font-weight-bold">Login</div>
-    <div class="card-body">
-      <form method="post" action="/usuario/login">
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="nome"
-            class="form-control"
-            id="nome"
-            placeholder="Digite o nome de usuario"
+    <!-- Logo acima do card (fora do card) -->
+    <div class="text-center mb-5">
+      <img
+        src="/imagens/Logo_Buriti_Mogi.png"
+        alt="Logo2"
+        class="img-fluid"
+        style="max-width: 150px"
+      />
+    </div>
+
+    <!-- Card de Login -->
+    <div class="card shadow" style="width: 100%; max-width: 300px">
+      <div
+        class="card-header bg-success text-white font-weight-bold text-center"
+      >
+        Login
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-2">
+          <img
+            src="/imagens/fontbolt.png"
+            alt="Logo2"
+            class="img-fluid"
+            style="max-width: 200px"
           />
-          <label for="nome">Digite o nome de usuario</label>
         </div>
-        <div class="form-floating mb-3">
-          <input
-            type="password"
-            name="senha"
-            class="form-control"
-            id="senha"
-            placeholder="Digite a senha"
-          />
-          <label for="senha">Digite a senha</label>
-        </div>
-        <br />
-        <div class="d-grid gap-2 col-6 mx-auto">
-          <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-        <% if( msg != '') { %>
-        <div class="d-grid gap-2 col-6 mx-auto"><%= msg %></div>
-        <% } %>
-      </form>
+        <form method="post" action="/usuario/login">
+          <!-- Campo de nome de usuário -->
+          <div class="form-floating mb-2">
+            <input
+              type="text"
+              name="nome"
+              class="form-control"
+              id="nome"
+              placeholder="Digite o nome de usuário"
+            />
+            <label for="nome">Usuário</label>
+          </div>
+
+          <!-- Campo de senha -->
+          <div class="form-floating mb-2">
+            <input
+              type="password"
+              name="senha"
+              class="form-control"
+              id="senha"
+              placeholder="Digite a senha"
+            />
+            <label for="senha">Senha</label>
+          </div>
+
+          <!-- Botão de login -->
+          <div class="d-grid col-4 mx-auto">
+            <button type="submit" class="btn btn-success">Login</button>
+          </div>
+
+          <!-- Exibição de mensagem de erro -->
+          <% if (msg != '') { %>
+          <div class="mt-3 alert alert-danger text-center"><%= msg %></div>
+          <% } %>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+
 <%- include('./partials/rodape.ejs') %>
