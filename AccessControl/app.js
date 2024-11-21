@@ -67,5 +67,4 @@ app.use("/usuario", usuarioRoute);
 app.use("/entregas", entregasRoute);
 app.use("/servicos", servicoRoute);
 
-
 module.exports = app;
