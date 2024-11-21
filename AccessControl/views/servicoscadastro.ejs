@@ -1,110 +1,121 @@
-<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
 
-<div class="container">
-  <div class="card position-absolute top-50 start-50 translate-middle col-10">
-    <div class="card-header bg-primary text-white font-weight-bold">
-      CADASTRO DE SERVICO
-    </div>
-    <div class="card-body">
-      <form method="post" action="/servicoscadastro">
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="servico_nome"
-            class="form-control"
-            id="servico_nome"
-            placeholder="Digite o nome do Prestador"
-            required
-          />
-          <label for="servico_nome">Nome do Prestador</label>
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-1">
+      <div class="card" style="width: 100%; max-width: 800px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          CADASTRO DE SERVIÇO
         </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="veiculos_placa"
-            class="form-control"
-            id="veiculos_placa"
-            placeholder="Placa do veículo"
-            required
-          />
-          <label for="veiculos_placa">Placa do Veículo</label>
+        <div class="card-body">
+          <form method="post" action="/servicoscadastro">
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="servico_nome"
+                class="form-control"
+                id="servico_nome"
+                placeholder="Digite o nome do Prestador"
+                required
+              />
+              <label for="servico_nome">Nome do Prestador</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="veiculos_placa"
+                class="form-control"
+                id="veiculos_placa"
+                placeholder="Placa do veículo"
+                required
+              />
+              <label for="veiculos_placa">Placa do Veículo</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="veiculos_modelo"
+                class="form-control"
+                id="veiculos_modelo"
+                placeholder="Digite o modelo do veículo"
+                required
+              />
+              <label for="veiculos_modelo">Modelo do veículo</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="telefone"
+                class="form-control"
+                id="telefone"
+                placeholder="Digite o telefone"
+                required
+              />
+              <label for="telefone">Celular</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="doc_cpf"
+                class="form-control"
+                id="doc_cpf"
+                placeholder="CPF"
+                required
+              />
+              <label for="doc_cpf">CPF</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="doc_cnh"
+                class="form-control"
+                id="doc_cnh"
+                placeholder="CNH"
+                required
+              />
+              <label for="doc_cnh">CNH</label>
+            </div>
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="doc_empresa"
+                class="form-control"
+                id="doc_empresa"
+                placeholder="Empresa"
+                required
+              />
+              <label for="empresa">Empresa</label>
+            </div>
+            <div class="form-floating mb-0">
+              <input
+                type="text"
+                name="servico_descricao"
+                class="form-control"
+                id="servico_descricao"
+                placeholder="Descricao"
+                required
+              />
+              <label for="empresa">Descricao</label>
+            </div>
+            <br />
+            <div class="d-grid col-2 mx-auto">
+              <button type="submit" class="btn btn-success">Incluir</button>
+            </div>
+            <% if (msg != '') { %>
+            <div class="alert alert-danger" role="alert"><%= msg %></div>
+            <% } %>
+          </form>
         </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="veiculos_modelo"
-            class="form-control"
-            id="veiculos_modelo"
-            placeholder="Digite o modelo do veículo"
-            required
-          />
-          <label for="veiculos_modelo">Modelo do veículo</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="telefone"
-            class="form-control"
-            id="telefone"
-            placeholder="Digite o telefone"
-            required
-          />
-          <label for="telefone">Celular</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="doc_cpf"
-            class="form-control"
-            id="doc_cpf"
-            placeholder="CPF"
-            required
-          />
-          <label for="doc_cpf">CPF</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="doc_cnh"
-            class="form-control"
-            id="doc_cnh"
-            placeholder="CNH"
-            required
-          />
-          <label for="doc_cnh">CNH</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="doc_empresa"
-            class="form-control"
-            id="doc_empresa"
-            placeholder="Empresa"
-            required
-          />
-          <label for="empresa">Empresa</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            name="servico_descricao"
-            class="form-control"
-            id="servico_descricao"
-            placeholder="Descricao"
-            required
-          />
-          <label for="empresa">Descricao</label>
-        </div>
-        <br />
-        <div class="d-grid col-6 mx-auto">
-          <button type="submit" class="btn btn-primary">Incluir</button>
-        </div>
-        <% if (msg != '') { %>
-        <div class="alert alert-danger" role="alert"><%= msg %></div>
-        <% } %>
-      </form>
+      </div>
     </div>
   </div>
 </div>
 
 <%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->
