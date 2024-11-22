@@ -24,8 +24,10 @@ const registro_patio = require("./models/registro_patio");
 //Rotas
 const genericasRoute = require("./routes/genericasRoute");
 const usuarioRoute = require("./routes/usuariosRoute");
-const entregasRoute = require("./routes/entregasroute");
-const servicoRoute = require("./routes/servicosroute");
+const entregasRoute = require("./routes/entregasRoute");
+const servicoRoute = require("./routes/servicosRoute");
+const chavesRoute = require("./routes/chavesRoute");
+const bicicletarioRoute = require("./routes/bicicletarioRoute");
 
 const app = express();
 
@@ -66,5 +68,7 @@ app.use("/", genericasRoute);
 app.use("/usuario", usuarioRoute);
 app.use("/entregas", entregasRoute);
 app.use("/servicos", servicoRoute);
+app.use("/chaves", chavesRoute);
+app.use("/bicicletario", bicicletarioRoute);
 
 module.exports = app;

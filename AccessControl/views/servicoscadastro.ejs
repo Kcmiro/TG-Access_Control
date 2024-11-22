@@ -6,109 +6,147 @@
 <div class="container-fluid">
   <div class="row min-vh-100">
     <!-- Conteúdo principal (Lado Direito) -->
-    <div class="col-md-12 d-flex justify-content-center align-items-start pt-1">
-      <div class="card" style="width: 100%; max-width: 800px">
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 800px">
         <div
           class="card-header bg-dark text-white font-weight-bold text-center"
         >
           CADASTRO DE SERVIÇO
         </div>
         <div class="card-body">
-          <form method="post" action="/servicoscadastro">
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="servico_nome"
-                class="form-control"
-                id="servico_nome"
-                placeholder="Digite o nome do Prestador"
-                required
-              />
-              <label for="servico_nome">Nome do Prestador</label>
+          <form method="post" action="/servicos/servicoscadastro">
+            <div class="row gx-2 mb-2">
+              <!-- Coluna para Prestador de Serviço e Celular -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="servico_nome"
+                    class="form-control"
+                    id="servico_nome"
+                    placeholder="Digite o nome do Prestador"
+                    required
+                  />
+                  <label for="servico_nome">Prestador de Servico</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="telefone"
+                    class="form-control"
+                    id="telefone"
+                    placeholder="Digite o telefone"
+                    required
+                  />
+                  <label for="telefone">Celular</label>
+                </div>
+              </div>
             </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="veiculos_placa"
-                class="form-control"
-                id="veiculos_placa"
-                placeholder="Placa do veículo"
-                required
-              />
-              <label for="veiculos_placa">Placa do Veículo</label>
+
+            <div class="row gx-2 mb-2">
+              <!-- Coluna para Placa do Veículo e Modelo -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="veiculos_placa"
+                    class="form-control"
+                    id="veiculos_placa"
+                    placeholder="Placa do veículo"
+                    required
+                  />
+                  <label for="veiculos_placa">Placa do Veículo</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="veiculos_modelo"
+                    class="form-control"
+                    id="veiculos_modelo"
+                    placeholder="Digite o modelo do veículo"
+                    required
+                  />
+                  <label for="veiculos_modelo">Modelo do Veículo</label>
+                </div>
+              </div>
             </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="veiculos_modelo"
-                class="form-control"
-                id="veiculos_modelo"
-                placeholder="Digite o modelo do veículo"
-                required
-              />
-              <label for="veiculos_modelo">Modelo do veículo</label>
+
+            <div class="row gx-2 mb-3">
+              <!-- Coluna para CNH e CPF -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_cnh"
+                    class="form-control"
+                    id="doc_cnh"
+                    placeholder="CNH"
+                    required
+                  />
+                  <label for="doc_cnh">CNH</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_cpf"
+                    class="form-control"
+                    id="doc_cpf"
+                    placeholder="CPF"
+                    required
+                  />
+                  <label for="doc_cpf">CPF</label>
+                </div>
+              </div>
             </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="telefone"
-                class="form-control"
-                id="telefone"
-                placeholder="Digite o telefone"
-                required
-              />
-              <label for="telefone">Celular</label>
+
+            <div class="row gx-2 mb-3">
+              <!-- Coluna para Empresa e Descrição -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_empresa"
+                    class="form-control"
+                    id="doc_empresa"
+                    placeholder="Empresa"
+                    required
+                  />
+                  <label for="doc_empresa">Empresa</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-0">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="servico_descricao"
+                    class="form-control"
+                    id="servico_descricao"
+                    placeholder="Descricao"
+                    required
+                  />
+                  <label for="servico_descricao">Descrição</label>
+                </div>
+              </div>
             </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="doc_cpf"
-                class="form-control"
-                id="doc_cpf"
-                placeholder="CPF"
-                required
-              />
-              <label for="doc_cpf">CPF</label>
-            </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="doc_cnh"
-                class="form-control"
-                id="doc_cnh"
-                placeholder="CNH"
-                required
-              />
-              <label for="doc_cnh">CNH</label>
-            </div>
-            <div class="form-floating mb-2">
-              <input
-                type="text"
-                name="doc_empresa"
-                class="form-control"
-                id="doc_empresa"
-                placeholder="Empresa"
-                required
-              />
-              <label for="empresa">Empresa</label>
-            </div>
-            <div class="form-floating mb-0">
-              <input
-                type="text"
-                name="servico_descricao"
-                class="form-control"
-                id="servico_descricao"
-                placeholder="Descricao"
-                required
-              />
-              <label for="empresa">Descricao</label>
-            </div>
+
             <br />
-            <div class="d-grid col-2 mx-auto">
-              <button type="submit" class="btn btn-success">Incluir</button>
+            <div class="d-grid col-2 mx-auto mt-2">
+              <button type="submit" class="btn btn-success">Cadastrar</button>
             </div>
+
             <% if (msg != '') { %>
-            <div class="alert alert-danger" role="alert"><%= msg %></div>
+            <div
+              class="alert alert-success mx-auto mt-3 text-center"
+              role="alert"
+            >
+              <%= msg %>
+            </div>
             <% } %>
           </form>
         </div>
