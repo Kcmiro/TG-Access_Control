@@ -58,85 +58,67 @@ exports.create = (req, res, next) => {
   }
 };
 
+// Controlador para editar (atualizar) a chave
 exports.update = (req, res, next) => {
-  const chave_id = req.body.chave_id;
+  const chave_id = req.params.id;
   const chave_nome = req.body.chave_nome;
 
-  if (!chave_id || !chave_nome) {
-    return res.render("chavescadastro", { msg: "PREENCHA TODOS OS CAMPOS" });
-  } else {
-    chaves
-      .findOne({
-        where: {
-          chave_id: chave_id,
-        },
-      })
-      .then((Chave) => {
-        if (Chave == undefined) {
-          chaves
-            .update({
-              chave_id: chave_id,
-              chave_nome: chave_nome,
-            })
-            .then((chavecriado) => {
-              res.render("chavescadastro", {
-                msg: "CHAVE ATUALIZADA",
-                Chave: {
-                  chave_id: chavecriado.chave_id,
-                  chave_nome: chavecriado.chave_nome,
-                },
-              });
-            })
-            .catch((err) => {
-              console.log(err);
-              res.render("cadastrochaves", {
-                msg: "Erro no cadastro da chave",
-              });
-            });
-        } else {
-          res.render("cadastrochave", { msg: "Chave já existe!" });
-        }
-      });
-  }
-};
-
-exports.delete = (req, res, next) => {
-  const chave_id = req.body.chave_id;
-
+  // Atualiza a chave no banco de dados
   chaves
-    .destroy({
-      where: {
-        chave_id: chave_id,
-      },
-    })
+    .update({ chave_nome: chave_nome }, { where: { chave_id: chave_id } })
     .then(() => {
-      res.render("chavescadastro", {
-        mensagem: "Chave excluído",
-      });
+      res.redirect("/chaves/listarchaves"); // Redireciona para a lista de chaves
     })
     .catch((err) => {
       console.log(err);
-      res.render("cadastrochave", {
+      res.redirect("/chaves/listarchaves"); // Em caso de erro, redireciona de volta
+    });
+};
+
+exports.delete = (req, res, next) => {
+  const chave_id = req.params.id; // A chave_id vem da URL
+
+  console.log("Tentando excluir chave com ID:", chave_id);
+
+  if (!chave_id) {
+    console.log("Erro: ID não fornecido");
+    return res.render("chavescadastro", {
+      mensagem: "Erro: ID de chave não fornecido",
+    });
+  }
+
+  chaves
+    .destroy({
+      where: { chave_id: chave_id }, // Apaga a chave com o chave_id fornecido
+    })
+    .then(() => {
+      console.log("Chave excluída com sucesso");
+      res.redirect("/chaves/listarchaves"); // Redireciona para a lista de chaves
+    })
+    .catch((err) => {
+      console.log("Erro ao excluir chave:", err);
+      res.render("listarchaves", {
         mensagem: "Erro na exclusão de Chave",
       });
     });
 };
 
 exports.getOne = (req, res, next) => {
-  const chave_id = req.params.chave_id;
-
+  const chave_id = req.params.id;
   chaves
     .findOne({
-      where: {
-        chave_id: chave_id,
-      },
+      where: { chave_id: chave_id },
       attributes: ["chave_id", "chave_nome"],
     })
     .then((chave) => {
-      res.render("chavescadastro", {
-        mensagem: "Tipo encontrado",
-        chave: chave,
-      });
+      if (!chave) {
+        return res.redirect("/chaves/listarchaves");
+      }
+      res.render("editarchaves", { chave: chave });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/chaves/listarchaves");
     });
 };
 
@@ -147,9 +129,13 @@ exports.getAll = (req, res, next) => {
       attributes: ["chave_id", "chave_nome"],
     })
     .then((chaves) => {
-      res.status(200).json({
+      res.render("listarchaves", {
         mensagem: "Tipos encontrados",
         chaves: chaves,
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("listarchaves", { mensagem: "Erro ao carregar as chaves." });
     });
 };

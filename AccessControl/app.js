@@ -4,6 +4,7 @@ const path = require("path");
 //Módulos Externos
 const express = require("express");
 const session = require("express-session");
+const methodOverride = require("method-override");
 
 //Modulos do Projeto
 const connection = require("./database/database");
@@ -70,5 +71,7 @@ app.use("/entregas", entregasRoute);
 app.use("/servicos", servicoRoute);
 app.use("/chaves", chavesRoute);
 app.use("/bicicletario", bicicletarioRoute);
+
+app.use(methodOverride("_method"));
 
 module.exports = app;

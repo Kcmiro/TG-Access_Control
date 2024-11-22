@@ -1,0 +1,65 @@
+<%- include('./partials/header.ejs') %><!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 800px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          LISTA DE CHAVES CADASTRADAS
+        </div>
+        <div class="card-body">
+          <div class="d-grid col-4 mx-auto mb-3">
+            <a href="/chaves/chavescadastro" class="btn btn-secondary">
+              Cadastrar Chave
+            </a>
+          </div>
+          <form method="get" action="/chaves/listarchaves">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">Chave</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% chaves.forEach(chave => { %>
+                <tr>
+                  <td><%= chave.chave_id %></td>
+                  <td><%= chave.chave_nome %></td>
+                  <td>
+                    <!-- Botão para editar a chave -->
+                    <a
+                      href="/chaves/editarchaves/<%= chave.chave_id %>"
+                      class="btn btn-warning btn-sm"
+                      >Editar</a
+                    >
+                    <!-- Botão para excluir a chave -->
+                    <form
+                      method="post"
+                      action="/chaves/excluir/<%= chave.chave_id %>/excluir"
+                      style="display: inline"
+                    >
+                      <button type="submit" class="btn btn-danger btn-sm">
+                        Excluir
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->

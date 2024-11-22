@@ -15,9 +15,10 @@ router.get(
 );
 router.post("/registrochavecadastro", checkLogin, rchaveController.create);
 
-router.put("/:id", checkLogin, chaveController.update);
-router.delete("/:id", checkLogin, chaveController.delete);
-router.get("/", checkLogin, chaveController.getAll);
-router.get("/:id", checkLogin, chaveController.getOne);
+router.get("/listarchaves/", checkLogin, chaveController.getAll);
+
+router.get("/editarchaves/:id", checkLogin, chaveController.getOne);
+router.post("/editarchaves/:id", checkLogin, chaveController.update);
+router.post("excluir/:id/excluir", checkLogin, chaveController.delete);
 
 module.exports = router;
