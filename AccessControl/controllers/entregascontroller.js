@@ -6,6 +6,10 @@ const Telefones = require("../models/telefone");
 const { where } = require("sequelize");
 const entregas = require("../models/entregas");
 
+exports.mostrarEntregas = (req, res, next) => {
+  res.render("entregascadastro", { msg: "" });
+};
+
 exports.create = (req, res, next) => {
   const entregas_nome = req.body.entregas_nome;
   const veiculos_placa = req.body.veiculos_placa;

@@ -1,0 +1,146 @@
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 800px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          CADASTRO DE ENTREGAS
+        </div>
+        <div class="card-body">
+          <form method="post" action="/entregas/entregascadastro">
+            <div class="row">
+              <!-- Coluna para Entregador e Celular -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="entregas_nome"
+                    class="form-control"
+                    id="entregas_nome"
+                    placeholder="Digite o nome do Prestador"
+                    required
+                  />
+                  <label for="entregas_nome">Entregador</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="telefone"
+                    class="form-control"
+                    id="telefone"
+                    placeholder="Digite o telefone"
+                    required
+                  />
+                  <label for="telefone">Celular</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Coluna para Placa do Veículo e Modelo -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="veiculos_placa"
+                    class="form-control"
+                    id="veiculos_placa"
+                    placeholder="Placa do veículo"
+                    required
+                  />
+                  <label for="veiculos_placa">Placa do Veículo</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="veiculos_modelo"
+                    class="form-control"
+                    id="veiculos_modelo"
+                    placeholder="Digite o modelo do veículo"
+                    required
+                  />
+                  <label for="veiculos_modelo">Modelo do Veículo</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Coluna para CPF e CNH -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_cpf"
+                    class="form-control"
+                    id="doc_cpf"
+                    placeholder="CPF"
+                    required
+                  />
+                  <label for="doc_cpf">CPF</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_cnh"
+                    class="form-control"
+                    id="doc_cnh"
+                    placeholder="CNH"
+                    required
+                  />
+                  <label for="doc_cnh">CNH</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Coluna para Empresa -->
+              <div class="col-md-6 mx-auto mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="doc_empresa"
+                    class="form-control"
+                    id="doc_empresa"
+                    placeholder="Empresa"
+                    required
+                  />
+                  <label for="doc_empresa">Empresa</label>
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <div class="d-grid col-2 mx-auto mt-2">
+              <button type="submit" class="btn btn-success">Cadastrar</button>
+            </div>
+
+            <% if (msg != '') { %>
+            <div
+              class="alert alert-success mx-auto mt-3 text-center"
+              role="alert"
+            >
+              <%= msg %>
+            </div>
+            <% } %>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->
