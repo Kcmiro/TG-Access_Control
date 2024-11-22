@@ -1,0 +1,116 @@
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 500px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          RETIRADA DE CHAVES
+        </div>
+        <div class="card-body">
+          <form method="post" action="/entregas/entregascadastro">
+            <div class="row gx-2 mb-2">
+              <!-- Coluna para Entregador e Celular -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="chave_id"
+                    class="form-control"
+                    id="chave_id"
+                    placeholder="N°"
+                    required
+                  />
+                  <label for="chave_id">N°</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="rchave_nome"
+                    class="form-control"
+                    id="rchave_nome"
+                    placeholder="nome"
+                    required
+                  />
+                  <label for="rchave_nome">Nome</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gx-2 mb-2">
+              <!-- Coluna para Placa do Veículo e Modelo -->
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="rchave_motivo"
+                    class="form-control"
+                    id="rchave_motivo"
+                    placeholder="Motivo"
+                    required
+                  />
+                  <label for="rchave_motivo">Motivo</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="rchave_observacao"
+                    class="form-control"
+                    id="rchave_observacao"
+                    placeholder="Descricao"
+                    required
+                  />
+                  <label for="rchave_observacao">Descricao</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gx-2 mb-2">
+              <!-- Coluna para Empresa -->
+              <div class="col-md-6 mx-auto mb-2">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="rchave_telefone"
+                    class="form-control"
+                    id="rchave_telefone"
+                    placeholder="Celular"
+                    required
+                  />
+                  <label for="rchave_telefone">Celular</label>
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <div class="d-grid col-2 mx-auto mt-2">
+              <button type="submit" class="btn btn-success">Cadastrar</button>
+            </div>
+
+            <% if (msg != '') { %>
+            <div
+              class="alert alert-success mx-auto mt-3 text-center"
+              role="alert"
+            >
+              <%= msg %>
+            </div>
+            <% } %>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->

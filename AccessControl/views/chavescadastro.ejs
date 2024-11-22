@@ -1,0 +1,65 @@
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 500px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          CADASTRO DE CHAVES
+        </div>
+        <div class="card-body">
+          <form method="post" action="/chaves/chavescadastro">
+            <div class="row gx-1 mb-2">
+              <div class="col-md-3">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="chave_id"
+                    class="form-control"
+                    id="chave_id"
+                    placeholder="Digite o nome do Prestador"
+                    required
+                  />
+                  <label for="chave_id">N°</label>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    name="chave_nome"
+                    class="form-control"
+                    id="chave_nome"
+                    placeholder="nome"
+                    required
+                  />
+                  <label for="chave_nome">Chave</label>
+                </div>
+              </div>
+            </div>
+            <div class="d-grid col-3 mx-auto mt-2">
+              <button type="submit" class="btn btn-success">Cadastrar</button>
+            </div>
+            <% if (msg != '') { %>
+            <div
+              class="alert alert-success mx-auto mt-3 text-center"
+              role="alert"
+            >
+              <%= msg %>
+            </div>
+            <% } %>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->
