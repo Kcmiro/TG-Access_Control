@@ -4,6 +4,10 @@ const Telefone = require("../models/telefone");
 const { where, Model } = require("sequelize");
 const bicicletario = require("../models/bicicletario");
 
+exports.mostrarBicicletas = (req, res, next) => {
+  res.render("bicicletariocadastro", { msg: "" });
+};
+
 exports.create = (req, res, next) => {
   const bike_nome = req.body.bike_nome;
   const bike_cor = req.body.bike_cor;
