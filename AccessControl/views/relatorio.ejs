@@ -1,0 +1,61 @@
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div
+        class="card shadow-lg rounded-4"
+        style="width: 100%; max-width: 500px"
+      >
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          <h3><i class="fas fa-file-alt"></i> Geração de Relatórios</h3>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/relatorio" class="mx-3">
+            <div class="mb-3">
+              <label for="relatorio" class="form-label"
+                >Selecione o Relatório</label
+              >
+              <select
+                class="form-select form-select-lg"
+                id="relatorio"
+                name="relatorio"
+                required
+              >
+                <option value="" disabled selected>
+                  Selecione um Relatório
+                </option>
+                <option value="chaves">Chaves</option>
+              </select>
+            </div>
+
+            <!-- Botão para gerar relatório -->
+            <div class="d-grid col-6 mx-auto mt-4">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-download"></i> Gerar Relatório
+              </button>
+            </div>
+          </form>
+
+          <!-- Exibição da Mensagem -->
+          <div class="mt-4">
+            <% if (msg != '') { %>
+            <div class="alert alert-success text-center" role="alert">
+              <%= msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->
