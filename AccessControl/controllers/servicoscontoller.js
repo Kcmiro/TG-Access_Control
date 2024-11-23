@@ -173,67 +173,48 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  const id = req.body.id;
-
-  Entregas.destroy({
-    where: {
-      id: id,
-    },
-  })
+  const id = req.params.id;
+  Servicos.destroy({ where: { id: id } })
     .then(() => {
-      res.render("servicos", {
-        msg: "servicos excluída",
-      });
+      res.redirect("/servicos");
     })
     .catch((err) => {
       console.log(err);
-      res.render("servicos", {
-        msg: "Erro na exclusão do Entregador",
-      });
+      res.redirect("/servicos");
     });
 };
 
 exports.getOne = (req, res, next) => {
   const id = req.params.id;
-
-  Servicos.findByPk(id).then((servicos) => {
-    res.render("servicoscadastro", {
-      mensagem: "Servicos encontrado",
-      servicos: servicos,
+  Servicos.findByPk(id, {
+    include: [
+      { model: Veiculos, attributes: ["veiculos_placa", "veiculos_modelo"] },
+      { model: Telefones, attributes: ["telefone"] },
+      { model: Documentos, attributes: ["doc_cnh", "doc_cpf", "doc_empresa"] },
+    ],
+  })
+    .then((servico) => {
+      res.render("editarServico", { servico: servico });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/servicos");
     });
-  });
 };
 
 exports.getAll = (req, res, next) => {
   Servicos.findAll({
-    order: [["servico_nome", "ASC"]],
-    attributes: ["id", "servico_nome", "servico_descricao"],
     include: [
-      {
-        model: Veiculos,
-        require: true,
-        attributes: ["veiculos_placa", "veiculos_modelo"],
-      },
-      {
-        model: Documentos,
-        require: true,
-        attributes: ["doc_cnh", "doc_cpf", "doc_empresa"],
-      },
-      {
-        model: Telefones,
-        require: true,
-        attributes: ["telefone"],
-      },
+      { model: Veiculos, attributes: ["veiculos_placa", "veiculos_modelo"] },
+      { model: Telefones, attributes: ["telefone"] },
+      { model: Documentos, attributes: ["doc_cnh", "doc_cpf", "doc_empresa"] },
     ],
   })
-    .then((servicos) =>
-      res.render("servicoscadastro", {
-        msg: "Servicos Encontrados",
-        servicos: servicos,
-      })
-    )
+    .then((servicos) => {
+      res.render("listarservicos", { servicos: servicos });
+    })
     .catch((err) => {
       console.log(err);
-      res.render("servicoscadastro", { msg: "Erro ao buscar serviços" });
+      res.render("listarservicos", { msg: "Erro ao buscar serviços" });
     });
 };
