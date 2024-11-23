@@ -13,6 +13,24 @@ const veiculos = connection.define("veiculos", {
   },
 });
 
-//veiculos.sync({ force: true });
+veiculos.beforeCreate((veiculos, options) => {
+  // Remove qualquer formatação do CPF
+  if (veiculos.veiculos_placa) {
+    veiculos.veiculos_placa = veiculos.veiculos_placa.replace(
+      /[^A-Za-z0-9]/g,
+      ""
+    ); // Remove tudo que não for número
+  }
+});
+
+veiculos.beforeUpdate((veiculos, options) => {
+  // Remove qualquer formatação do CPF
+  if (veiculos.veiculos_placa) {
+    veiculos.veiculos_placa = veiculos.veiculos_placa.replace(
+      /[^A-Za-z0-9]/g,
+      ""
+    ); // Remove tudo que não for número
+  }
+});
 
 module.exports = veiculos;

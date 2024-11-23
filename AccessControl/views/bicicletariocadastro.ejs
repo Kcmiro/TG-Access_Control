@@ -1,8 +1,5 @@
-<%- include('./partials/header.ejs') %>
-<!-- Inclui o cabeçalho -->
+<%- include('./partials/header.ejs') %><!-- Inclui a sidebar apenas uma vez -->
 <%- include('./partials/sidebar.ejs') %>
-<!-- Inclui a sidebar apenas uma vez -->
-
 <div class="container-fluid">
   <div class="row min-vh-100">
     <!-- Conteúdo principal (Lado Direito) -->
@@ -37,9 +34,10 @@
                     type="text"
                     name="telefone"
                     class="form-control"
-                    id="telefone"
+                    id="telefones"
                     placeholder="Digite o telefone"
                     required
+                    maxlength="15"
                   />
                   <label for="telefone">Celular</label>
                 </div>
@@ -98,4 +96,3 @@
 </div>
 
 <%- include('./partials/rodape.ejs') %>
-<!-- Inclui o rodapé -->
