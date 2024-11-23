@@ -19,6 +19,6 @@ router.get("/listarchaves/", checkLogin, chaveController.getAll);
 
 router.get("/editarchaves/:id", checkLogin, chaveController.getOne);
 router.post("/editarchaves/:id", checkLogin, chaveController.update);
-router.post("excluir/:id/excluir", checkLogin, chaveController.delete);
+router.post("/:id/excluir", checkLogin, chaveController.delete);
 
 module.exports = router;
