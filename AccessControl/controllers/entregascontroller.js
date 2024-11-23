@@ -29,7 +29,7 @@ exports.create = (req, res, next) => {
     !doc_cpf ||
     !doc_empresa
   ) {
-    return res.render("entregas", { msg: "Preencha todos os campos" });
+    return res.render("entregascadastro", { msg: "Preencha todos os campos" });
   }
 
   // Verificando duplicidade antes de criar
@@ -42,18 +42,20 @@ exports.create = (req, res, next) => {
     .then(
       ([veiculoExistente, telefoneExistente, cnhExistente, cpfExistente]) => {
         if (veiculoExistente) {
-          return res.render("entregas", {
+          return res.render("entregascadastro", {
             msg: "Placa de veículo já cadastrada",
           });
         }
         if (telefoneExistente) {
-          return res.render("entregas", { msg: "Telefone já cadastrado" });
+          return res.render("entregascadastro", {
+            msg: "Telefone já cadastrado",
+          });
         }
         if (cnhExistente) {
-          return res.render("entregas", { msg: "CNH já cadastrada" });
+          return res.render("entregascadastro", { msg: "CNH já cadastrada" });
         }
         if (cpfExistente) {
-          return res.render("entregas", { msg: "CPF já cadastrado" });
+          return res.render("entregascadastro", { msg: "CPF já cadastrado" });
         }
 
         // Se não houver duplicidade, cria o veiculo, telefone, documento e entrega
@@ -81,20 +83,24 @@ exports.create = (req, res, next) => {
             });
           })
           .then((entregaCriada) => {
-            res.render("entregas", {
+            res.render("entregascadastro", {
               msg: "Entrega cadastrada com sucesso",
               entrega: entregaCriada,
             });
           })
           .catch((err) => {
             console.log(err);
-            res.render("entregas", { msg: "Erro ao cadastrar entrega" });
+            res.render("entregascadastro", {
+              msg: "Erro ao cadastrar entrega",
+            });
           });
       }
     )
     .catch((err) => {
       console.log(err);
-      res.render("entregas", { msg: "Erro ao verificar dados de duplicidade" });
+      res.render("entregascadastro", {
+        msg: "Erro ao verificar dados de duplicidade",
+      });
     });
 };
 
@@ -196,12 +202,37 @@ exports.delete = (req, res, next) => {
 exports.getOne = (req, res, next) => {
   const id = req.params.id;
 
-  Entregas.findByPk(id).then((entregas) => {
-    res.render({
-      mensagem: "Entregador encontrada",
-      entregas: entregas,
+  // Buscar entrega com associações de veiculo, telefone e documento
+  Entregas.findByPk(id, {
+    include: [
+      {
+        model: Veiculos,
+        attributes: ["veiculos_placa", "veiculos_modelo"],
+      },
+      {
+        model: Telefones,
+        attributes: ["telefone"],
+      },
+      {
+        model: Documentos,
+        attributes: ["doc_cnh", "doc_cpf", "doc_empresa"],
+      },
+    ],
+  })
+    .then((entrega) => {
+      if (!entrega) {
+        return res.redirect("/entregas/listarentregas"); // Redireciona se não encontrar a entrega
+      }
+
+      res.render("editarentregas", {
+        entrega: entrega, // Passa os dados da entrega para a view
+        msg: "",
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/entregas/listarentregas");
     });
-  });
 };
 
 exports.getAll = (req, res, next) => {
@@ -211,23 +242,33 @@ exports.getAll = (req, res, next) => {
     include: [
       {
         model: Veiculos,
-        require: true,
+        required: true, // Corrigido de "require" para "required"
         attributes: ["veiculos_placa", "veiculos_modelo"],
       },
-    ],
-    include: [
       {
         model: Documentos,
-        require: true,
+        required: true, // Corrigido de "require" para "required"
         attributes: ["doc_cnh", "doc_cpf", "doc_empresa"],
       },
-    ],
-    include: [
       {
         model: Telefones,
-        require: true,
+        required: true, // Corrigido de "require" para "required"
         attributes: ["telefone"],
       },
     ],
-  }).then((entregas) => res.render("entregas", { msg: "Entregas Encontrada" }));
+  })
+    .then((entregas) => {
+      // Passando os dados de entregas para a visualização
+      res.render("listarentregas", {
+        entregas: entregas, // Aqui você passa os dados para o EJS
+        msg: "", // Caso precise de uma mensagem
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.render("listarentregas", {
+        entregas: [], // Caso ocorra algum erro, você pode passar um array vazio
+        msg: "Erro ao carregar as entregas.", // Mensagem de erro
+      });
+    });
 };

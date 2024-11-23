@@ -1,0 +1,128 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Card para o formulário de edição -->
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h3>Editar Entrega: <%= entrega.entregas_nome %></h3>
+        </div>
+        <div class="card-body">
+          <!-- Formulário de edição -->
+          <form
+            method="POST"
+            action="/entregas/editarentregas/<%= entrega.id %>"
+          >
+            <!-- Campo para nome do entregador -->
+            <div class="form-group mb-3">
+              <label for="entregas_nome" class="form-label"
+                >Nome do Entregador:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="entregas_nome"
+                name="entregas_nome"
+                value="<%= entrega.entregas_nome %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para placa do veículo -->
+            <div class="form-group mb-3">
+              <label for="veiculos_placa" class="form-label"
+                >Placa do Veículo:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="veiculos_placa"
+                name="veiculos_placa"
+                value="<%= entrega.Veiculos.veiculos_placa %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para modelo do veículo -->
+            <div class="form-group mb-3">
+              <label for="veiculos_modelo" class="form-label"
+                >Modelo do Veículo:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="veiculos_modelo"
+                name="veiculos_modelo"
+                value="<%= entrega.Veiculos.veiculos_modelo %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para telefone -->
+            <div class="form-group mb-3">
+              <label for="telefone" class="form-label">Telefone:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="telefone"
+                name="telefone"
+                value="<%= entrega.Telefones[0].telefone %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para CNH -->
+            <div class="form-group mb-3">
+              <label for="doc_cnh" class="form-label">CNH:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="doc_cnh"
+                name="doc_cnh"
+                value="<%= entrega.Documentos.doc_cnh %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para CPF -->
+            <div class="form-group mb-3">
+              <label for="doc_cpf" class="form-label">CPF:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="doc_cpf"
+                name="doc_cpf"
+                value="<%= entrega.Documentos.doc_cpf %>"
+                required
+              />
+            </div>
+
+            <!-- Campo para empresa -->
+            <div class="form-group mb-3">
+              <label for="doc_empresa" class="form-label">Empresa:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="doc_empresa"
+                name="doc_empresa"
+                value="<%= entrega.Documentos.doc_empresa %>"
+                required
+              />
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-success">Atualizar</button>
+              <a href="/entregas/listarentregas" class="btn btn-secondary"
+                >Cancelar</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
