@@ -42,14 +42,14 @@
                   <td><%= entrega.entregas_nome %></td>
                   <td>
                     <% if (entrega.veiculos) { %> <%=
-                    entrega.veiculos.veiculos_placa %> - <%=
-                    entrega.veiculos.veiculos_modelo %> <% } else { %> Nenhum
+                    entrega.veiculo.veiculos_placa %> - <%=
+                    entrega.veiculo.veiculos_modelo %> <% } else { %> Nenhum
                     veículo associado <% } %>
                   </td>
 
                   <td>
-                    <% if (entrega.Telefones && entrega.Telefones.length > 0) {
-                    %> <%= entrega.Telefones[0].telefone %>
+                    <% if (entrega.telefone && entrega.telefone.length > 0) { %>
+                    <%= entrega.telefone[0].telefone %>
                     <!-- Exibe o primeiro telefone -->
                     <% } else { %> Nenhum telefone registrado <% } %>
                   </td>

@@ -1,22 +1,24 @@
 <%- include('./partials/header.ejs') %>
 <!-- Inclui o cabeçalho -->
 <%- include('./partials/sidebar.ejs') %>
-<!-- Inclui a sidebar apenas uma vez -->
+<!-- Inclui a sidebar -->
 
 <div class="container-fluid">
   <div class="row min-vh-100">
-    <!-- Conteúdo principal (Lado Direito) -->
     <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
       <div class="card rounded-4" style="width: 100%; max-width: 800px">
         <div
           class="card-header bg-dark text-white font-weight-bold text-center"
         >
-          CADASTRO DE SERVIÇO
+          EDITAR SERVIÇO
         </div>
         <div class="card-body">
-          <form method="post" action="/servicos/servicoscadastro">
+          <form
+            method="post"
+            action="/servicos/editarservicos/<%= servicos.id %>"
+          >
             <div class="row gx-2 mb-2">
-              <!-- Coluna para Prestador de Serviço e Celular -->
+              <!-- Coluna para Nome do Prestador de Serviço e Telefone -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">
                   <input
@@ -24,6 +26,7 @@
                     name="servico_nome"
                     class="form-control"
                     id="servico_nome"
+                    value="<%= servicos.servico_nome %>"
                     placeholder="Digite o nome do Prestador"
                     required
                   />
@@ -37,10 +40,10 @@
                     name="telefone"
                     class="form-control"
                     id="telefone"
+                    value="<%= servicos.telefone %>"
                     placeholder="Digite o telefone"
                     required
                     maxlength="15"
-                    pattern="^\(\d{2}\) \d{5}-\d{4}$"
                   />
                   <label for="telefone">Celular</label>
                 </div>
@@ -48,7 +51,7 @@
             </div>
 
             <div class="row gx-2 mb-2">
-              <!-- Coluna para Placa do Veículo e Modelo -->
+              <!-- Coluna para Placa e Modelo do Veículo -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">
                   <input
@@ -56,6 +59,7 @@
                     name="veiculos_placa"
                     class="form-control"
                     id="placa"
+                    value="<%= servicos.veiculo.veiculos_placa %>"
                     placeholder="Placa do veículo"
                     required
                     maxlength="8"
@@ -70,7 +74,8 @@
                     name="veiculos_modelo"
                     class="form-control"
                     id="veiculos_modelo"
-                    placeholder="Digite o modelo do veículo"
+                    value="<%= servicos.veiculo.veiculos_modelo %>"
+                    placeholder="Modelo do veículo"
                     required
                   />
                   <label for="veiculos_modelo">Modelo do Veículo</label>
@@ -78,7 +83,7 @@
               </div>
             </div>
 
-            <div class="row gx-2 mb-3">
+            <div class="row gx-2 mb-2">
               <!-- Coluna para CNH e CPF -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">
@@ -87,10 +92,10 @@
                     name="doc_cnh"
                     class="form-control"
                     id="doc_cnh"
+                    value="<%= servicos.documento.doc_cnh %>"
                     placeholder="CNH"
                     required
                     maxlength="11"
-                    pattern="\d{11}"
                   />
                   <label for="doc_cnh">CNH</label>
                 </div>
@@ -102,17 +107,17 @@
                     name="doc_cpf"
                     class="form-control"
                     id="cpf"
+                    value="<%= servicos.documento.doc_cpf %>"
                     placeholder="CPF"
                     required
                     maxlength="14"
-                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                   />
                   <label for="doc_cpf">CPF</label>
                 </div>
               </div>
             </div>
 
-            <div class="row gx-2 mb-3">
+            <div class="row gx-2 mb-2">
               <!-- Coluna para Empresa e Descrição -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">
@@ -121,47 +126,35 @@
                     name="doc_empresa"
                     class="form-control"
                     id="doc_empresa"
+                    value="<%= servicos.documento.doc_empresa %>"
                     placeholder="Empresa"
                     required
                   />
                   <label for="doc_empresa">Empresa</label>
                 </div>
               </div>
-              <div class="col-md-6 mb-0">
+              <div class="col-md-6 mb-2">
                 <div class="form-floating">
                   <input
                     type="text"
                     name="servico_descricao"
                     class="form-control"
                     id="servico_descricao"
-                    placeholder="Descricao"
+                    value="<%= servicos.servico_descricao %>"
+                    placeholder="Descrição"
                     required
                   />
-                  <label for="servico_descricao">Descrição</label>
+                  <label for="servicos_descricao">Descrição</label>
                 </div>
               </div>
             </div>
 
             <br />
             <div class="d-grid col-2 mx-auto mt-2">
-              <button type="submit" class="btn btn-success">Cadastrar</button>
+              <button type="submit" class="btn btn-success">
+                Salvar Alterações
+              </button>
             </div>
-
-            <% if (msg != '') { %>
-            <div
-              class="alert alert-success mx-auto mt-3 text-center"
-              role="alert"
-            >
-              <%= msg %>
-            </div>
-            <% } %> <% if (msg === 'Preencha todos os campos') { %>
-            <div
-              class="alert alert-danger mx-auto mt-3 text-center"
-              role="alert"
-            >
-              <%= msg %>
-            </div>
-            <% } %>
           </form>
         </div>
       </div>

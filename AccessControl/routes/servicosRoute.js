@@ -9,8 +9,8 @@ router.post("/servicoscadastro", checkLogin, servicoController.create);
 
 router.get("/listarservicos", checkLogin, servicoController.getAll);
 
-router.put("/:id", checkLogin, servicoController.update);
-router.delete("/:id", checkLogin, servicoController.delete);
-router.get("/:id", checkLogin, servicoController.getOne);
+router.get("/editarservicos/:id", checkLogin, servicoController.getOne);
+router.post("/editarservicos/:id", checkLogin, servicoController.update);
+router.post("/:id/excluir", checkLogin, servicoController.delete);
 
 module.exports = router;

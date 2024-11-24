@@ -63,7 +63,7 @@
                   <td>
                     <!-- Botão para editar o serviço -->
                     <a
-                      href="/servicos/editar/<%= servico.id %>"
+                      href="/servicos/editarservicos/<%= servico.id %>"
                       class="btn btn-warning btn-sm"
                       >Editar</a
                     >
@@ -71,7 +71,7 @@
                     <!-- Formulário para excluir o serviço -->
                     <form
                       method="post"
-                      action="/servicos/excluir/<%= servico.id %>"
+                      action="/servicos/<%= servico.id %>/excluir"
                       style="display: inline"
                     >
                       <button type="submit" class="btn btn-danger btn-sm">

@@ -92,7 +92,6 @@ exports.update = (req, res, next) => {
   const doc_cpf = req.body.doc_cpf;
   const doc_empresa = req.body.doc_empresa;
 
-  // Verificando se todos os campos foram preenchidos
   if (
     !servico_nome ||
     !veiculos_placa ||
@@ -102,33 +101,34 @@ exports.update = (req, res, next) => {
     !doc_cpf ||
     !doc_empresa
   ) {
-    return res.render("servicos", { msg: "Preencha todos os campos" });
+    return res.render("editarservicos", { msg: "Preencha todos os campos" });
   }
 
   Promise.all([
-    Veiculos.findOne({ where: { veiculos_placa: veiculos_placa } }), // Verifica placa
-    Telefones.findOne({ where: { telefone: telefone } }), // Verifica telefone
-    Documentos.findOne({ where: { doc_cnh: doc_cnh } }), // Verifica CNH
-    Documentos.findOne({ where: { doc_cpf: doc_cpf } }), // Verifica CPF
+    Veiculos.findOne({ where: { veiculos_placa: veiculos_placa } }),
+    Telefones.findOne({ where: { telefone: telefone } }),
+    Documentos.findOne({ where: { doc_cnh: doc_cnh } }),
+    Documentos.findOne({ where: { doc_cpf: doc_cpf } }),
   ]).then(
     ([veiculoExistente, telefoneExistente, cnhExistente, cpfExistente]) => {
       if (veiculoExistente) {
-        return res.render("servicos", {
+        return res.render("editarservicos", {
           msg: "Placa de veículo já cadastrada",
         });
       }
       if (telefoneExistente) {
-        return res.render("servicos", { msg: "Telefone já cadastrado" });
+        return res.render("editarservicos", { msg: "Telefone já cadastrado" });
       }
       if (cnhExistente) {
-        return res.render("servicos", { msg: "CNH já cadastrada" });
+        return res.render("editarservicos", { msg: "CNH já cadastrada" });
       }
       if (cpfExistente) {
-        return res.render("servicos", { msg: "CPF já cadastrado" });
+        return res.render("editarservicos", { msg: "CPF já cadastrado" });
       }
     }
   );
 
+  // Atualizações em veículos, telefones e documentos
   Veiculos.update({
     veiculos_placa: veiculos_placa,
     veiculos_modelo: veiculos_modelo,
@@ -142,33 +142,27 @@ exports.update = (req, res, next) => {
           doc_cpf: doc_cpf,
           doc_empresa: doc_empresa,
         }).then((doc) => {
-          // Agora, cria a entrega com as chaves estrangeiras
           return Servicos.update(
             {
               servico_nome: servico_nome,
               servico_descricao: servico_descricao,
-              veiculoId: veiculo.id, // Referência para o veiculo
-              telefoneId: tel.id, // Referência para o telefone
-              documentoId: doc.id, // Referência para o documento
+              veiculoId: veiculo.id,
+              telefoneId: tel.id,
+              documentoId: doc.id,
             },
-            {
-              where: {
-                id: id,
-              },
-            }
+            { where: { id: id } }
           );
         });
       });
     })
-    .then((servicoatualizado) => {
-      res.render("servicos", {
-        msg: "Servico Atualizado com sucesso",
-        servico: servicoatualizado,
+    .then(() => {
+      res.redirect("/servicos/listarservicos", {
+        msg: "Serviço atualizado com sucesso",
       });
     })
     .catch((err) => {
       console.log(err);
-      res.render("servicos", { msg: "Erro ao atualizar Servico" });
+      res.render("editarservicos", { msg: "Erro ao atualizar Serviço" });
     });
 };
 
@@ -176,11 +170,11 @@ exports.delete = (req, res, next) => {
   const id = req.params.id;
   Servicos.destroy({ where: { id: id } })
     .then(() => {
-      res.redirect("/servicos");
+      res.redirect("/servicos/listarservicos");
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/servicos");
+      res.redirect("/servicos/listarservicos");
     });
 };
 
@@ -193,12 +187,13 @@ exports.getOne = (req, res, next) => {
       { model: Documentos, attributes: ["doc_cnh", "doc_cpf", "doc_empresa"] },
     ],
   })
-    .then((servico) => {
-      res.render("editarServico", { servico: servico });
+    .then((servicos) => {
+      console.log(servicos);
+      res.render("editarservicos", { servicos: servicos });
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/servicos");
+      res.redirect("/servicos/listarservicos");
     });
 };
 
