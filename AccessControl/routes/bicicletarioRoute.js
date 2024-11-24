@@ -11,9 +11,11 @@ router.get(
 );
 router.post("/bicicletariocadastro", checkLogin, bicicletarioController.create);
 
-router.put("/:id", checkLogin, bicicletarioController.update);
-router.delete("/:id", checkLogin, bicicletarioController.delete);
-router.get("/", checkLogin, bicicletarioController.getAll);
-router.get("/:id", checkLogin, bicicletarioController.getOne);
+router.get("/listarbicicletas", checkLogin, bicicletarioController.getAll);
+
+router.get("/editarbicicletas/:id", checkLogin, bicicletarioController.getOne);
+router.post("/editarbicicletas/:id", checkLogin, bicicletarioController.update);
+
+router.post("/:id/excluir", checkLogin, bicicletarioController.delete);
 
 module.exports = router;

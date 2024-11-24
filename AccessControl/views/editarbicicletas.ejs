@@ -1,0 +1,69 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 400px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          <h3>Ficha Bicicletario: <%= bicicletario.id %></h3>
+        </div>
+        <div class="card-body">
+          <form
+            method="POST"
+            action="/bicicletario/editarbicicletas/<%= bicicletario.id %>"
+          >
+            <div class="form-group mb-3">
+              <label for="bike_nome">Nome</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bike_nome"
+                name="bike_nome"
+                value="<%= bicicletario.bike_nome %>"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="bike_cor">Cor</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bike_cor"
+                name="bike_cor"
+                value="<%= bicicletario.bike_cor %>"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="bike_loja">Loja</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bike_loja"
+                name="bike_loja"
+                value="<%= bicicletario.bike_loja %>"
+                required
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label for="telefone">Telefone</label>
+              <input
+                type="text"
+                class="form-control"
+                id="telefone"
+                name="telefone"
+                value="<%= bicicletario.telefone.telefone %>"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-warning">Atualizar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
