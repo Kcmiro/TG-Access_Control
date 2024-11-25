@@ -40,18 +40,14 @@
                 <tr>
                   <td><%= entrega.id %></td>
                   <td><%= entrega.entregas_nome %></td>
-                  <td>
-                    <% if (entrega.veiculos) { %> <%=
-                    entrega.veiculo.veiculos_placa %> - <%=
-                    entrega.veiculo.veiculos_modelo %> <% } else { %> Nenhum
-                    veículo associado <% } %>
+                  <td class="placa">
+                    <% if (entrega.veiculo) { %>
+                    <span><%= entrega.veiculo.veiculos_placa %></span>
+                    <% } else { %> Nenhum veículo associado <% } %>
                   </td>
-
-                  <td>
-                    <% if (entrega.telefone && entrega.telefone.length > 0) { %>
-                    <%= entrega.telefone[0].telefone %>
-                    <!-- Exibe o primeiro telefone -->
-                    <% } else { %> Nenhum telefone registrado <% } %>
+                  <td class="telefone">
+                    <% if (entrega.telefone) { %> <%= entrega.telefone.telefone
+                    %> <% } else { %> Nenhum telefone registrado <% } %>
                   </td>
                   <td><%= entrega.documento.doc_cpf %></td>
                   <!-- Exibe CPF -->

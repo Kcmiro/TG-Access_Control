@@ -12,9 +12,9 @@
         >
           EDITAR SERVIÇO
         </div>
-        <div class="card-body">
+      
           <form
-            method="post"
+            method="POST"
             action="/servicos/editarservicos/<%= servicos.id %>"
           >
             <div class="row gx-2 mb-2">
@@ -40,7 +40,7 @@
                     name="telefone"
                     class="form-control"
                     id="telefone"
-                    value="<%= servicos.telefone %>"
+                    value="<%= servicos.telefone.telefone %>"
                     placeholder="Digite o telefone"
                     required
                     maxlength="15"
@@ -152,7 +152,7 @@
             <br />
             <div class="d-grid col-2 mx-auto mt-2">
               <button type="submit" class="btn btn-success">
-                Salvar Alterações
+                Editar
               </button>
             </div>
           </form>

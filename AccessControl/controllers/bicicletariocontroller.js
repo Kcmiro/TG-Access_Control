@@ -61,7 +61,7 @@ exports.update = (req, res, next) => {
   const telefone = req.body.telefone;
 
   if (!bike_nome || !bike_cor || !telefone) {
-    return res.render("bicicletario", { msg: "Preecha todos os campos" });
+    return res.render("editarbicicletario", { msg: "Preecha todos os campos" });
   }
 
   Promise.all([
@@ -144,7 +144,7 @@ exports.getOne = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/listarbicicletas"); // Em caso de erro, redireciona para a lista de bicicletas
+      res.redirect("/bicicletario/listarbicicletas"); // Em caso de erro, redireciona para a lista de bicicletas
     });
 };
 

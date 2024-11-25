@@ -81,89 +81,104 @@ exports.create = (req, res, next) => {
     });
 };
 
-exports.update = (req, res, next) => {
-  const id = req.body.id;
-  const servico_nome = req.body.servico_nome;
-  const servico_descricao = req.body.servico_descricao;
-  const veiculos_placa = req.body.veiculos_placa;
-  const veiculos_modelo = req.body.veiculos_modelo;
-  const telefone = req.body.telefone;
-  const doc_cnh = req.body.doc_cnh;
-  const doc_cpf = req.body.doc_cpf;
-  const doc_empresa = req.body.doc_empresa;
+exports.update = async (req, res) => {
+  const {
+    servico_nome,
+    telefone,
+    veiculos_placa,
+    veiculos_modelo,
+    doc_cnh,
+    doc_cpf,
+    doc_empresa,
+    servico_descricao,
+  } = req.body;
 
-  if (
-    !servico_nome ||
-    !veiculos_placa ||
-    !veiculos_modelo ||
-    !telefone ||
-    !doc_cnh ||
-    !doc_cpf ||
-    !doc_empresa
-  ) {
-    return res.render("editarservicos", { msg: "Preencha todos os campos" });
-  }
+  const servicoId = req.params.id; // ID do serviço a ser atualizado
 
-  Promise.all([
-    Veiculos.findOne({ where: { veiculos_placa: veiculos_placa } }),
-    Telefones.findOne({ where: { telefone: telefone } }),
-    Documentos.findOne({ where: { doc_cnh: doc_cnh } }),
-    Documentos.findOne({ where: { doc_cpf: doc_cpf } }),
-  ]).then(
-    ([veiculoExistente, telefoneExistente, cnhExistente, cpfExistente]) => {
-      if (veiculoExistente) {
-        return res.render("editarservicos", {
-          msg: "Placa de veículo já cadastrada",
-        });
-      }
-      if (telefoneExistente) {
-        return res.render("editarservicos", { msg: "Telefone já cadastrado" });
-      }
-      if (cnhExistente) {
-        return res.render("editarservicos", { msg: "CNH já cadastrada" });
-      }
-      if (cpfExistente) {
-        return res.render("editarservicos", { msg: "CPF já cadastrado" });
-      }
+  try {
+    // Buscar o serviço
+    const servico = await Servicos.findByPk(servicoId);
+
+    if (!servico) {
+      return res.status(404).send("Serviço não encontrado");
     }
-  );
 
-  // Atualizações em veículos, telefones e documentos
-  Veiculos.update({
-    veiculos_placa: veiculos_placa,
-    veiculos_modelo: veiculos_modelo,
-  })
-    .then((veiculo) => {
-      return Telefones.update({
-        telefone: telefone,
-      }).then((tel) => {
-        return Documentos.update({
-          doc_cnh: doc_cnh,
-          doc_cpf: doc_cpf,
-          doc_empresa: doc_empresa,
-        }).then((doc) => {
-          return Servicos.update(
-            {
-              servico_nome: servico_nome,
-              servico_descricao: servico_descricao,
-              veiculoId: veiculo.id,
-              telefoneId: tel.id,
-              documentoId: doc.id,
-            },
-            { where: { id: id } }
-          );
-        });
-      });
-    })
-    .then(() => {
-      res.redirect("/servicos/listarservicos", {
-        msg: "Serviço atualizado com sucesso",
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.render("editarservicos", { msg: "Erro ao atualizar Serviço" });
+    // Buscar ou criar o telefone
+    let telefoneRecord = await Telefones.findOne({
+      where: { telefone: telefone },
     });
+
+    if (!telefoneRecord) {
+      // Se o telefone não existir, cria um novo
+      telefoneRecord = await Telefones.create({ telefone });
+    }
+
+    // Buscar ou atualizar o veículo
+    let veiculoRecord = await Veiculos.findOne({
+      where: { veiculos_placa: veiculos_placa },
+    });
+
+    if (!veiculoRecord) {
+      // Se o veículo não existir, cria um novo
+      veiculoRecord = await Veiculos.create({
+        veiculos_placa: veiculos_placa,
+        veiculos_modelo: veiculos_modelo,
+      });
+    } else {
+      // Se o veículo existir, atualiza os dados
+      veiculoRecord.veiculos_placa = veiculos_placa;
+      veiculoRecord.veiculos_modelo = veiculos_modelo;
+      await veiculoRecord.save();
+    }
+
+    // Buscar ou atualizar o documento (verificar doc_cnh)
+    let documentoRecord = await Documentos.findOne({
+      where: { doc_cnh },
+    });
+
+    if (!documentoRecord) {
+      // Se o documento não existir, cria um novo
+      documentoRecord = await Documentos.create({
+        doc_cnh,
+        doc_cpf,
+        doc_empresa,
+      });
+    } else {
+      // Verificando se o doc_cnh foi alterado e deve ser atualizado
+      if (documentoRecord.doc_cnh !== doc_cnh) {
+        // Atualiza o CNH apenas se for diferente
+        documentoRecord.doc_cnh = doc_cnh;
+      }
+
+      // Verificando se o CPF foi alterado e deve ser atualizado
+      if (documentoRecord.doc_cpf !== doc_cpf) {
+        // Atualiza o CPF se for diferente
+        documentoRecord.doc_cpf = doc_cpf;
+      }
+
+      // Atualiza o nome da empresa, sempre
+      documentoRecord.doc_empresa = doc_empresa;
+
+      // Salva as mudanças no banco
+      await documentoRecord.save();
+    }
+
+    // Atualizar os dados do serviço
+    servico.servico_nome = servico_nome;
+    servico.telefoneId = telefoneRecord.id; // Atualiza com o id do telefone
+    servico.veiculoId = veiculoRecord.id; // Atualiza com o id do veículo
+    servico.documentoId = documentoRecord.id; // Atualiza com o id do documento
+    servico.servico_descricao = servico_descricao;
+
+    // Salvar o serviço com as novas informações
+    await servico.save();
+
+    // Redirecionar após a atualização
+    res.redirect("/servicos/listarservicos"); // Redireciona para a página de serviços (ajuste conforme necessário)
+  } catch (error) {
+    console.error("Erro ao atualizar serviço:", error);
+    res.status(500).send("Erro ao atualizar serviço");
+  }
 };
 
 exports.delete = (req, res, next) => {

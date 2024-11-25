@@ -59,41 +59,6 @@ exports.create = (req, res, next) => {
         }
 
         // Se não houver duplicidade, cria o veiculo, telefone, documento e entrega
-        Veiculos.create({
-          veiculos_placa: veiculos_placa,
-          veiculos_modelo: veiculos_modelo,
-        })
-          .then((veiculo) => {
-            return Telefones.create({
-              telefone: telefone,
-            }).then((tel) => {
-              return Documentos.create({
-                doc_cnh: doc_cnh,
-                doc_cpf: doc_cpf,
-                doc_empresa: doc_empresa,
-              }).then((doc) => {
-                // Agora, cria a entrega com as chaves estrangeiras
-                return Entregas.create({
-                  entregas_nome: entregas_nome,
-                  veiculoId: veiculo.id, // Referência para o veiculo
-                  telefoneId: tel.id, // Referência para o telefone
-                  documentoId: doc.id, // Referência para o documento
-                });
-              });
-            });
-          })
-          .then((entregaCriada) => {
-            res.render("entregascadastro", {
-              msg: "Entrega cadastrada com sucesso",
-              entrega: entregaCriada,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.render("entregascadastro", {
-              msg: "Erro ao cadastrar entrega",
-            });
-          });
       }
     )
     .catch((err) => {

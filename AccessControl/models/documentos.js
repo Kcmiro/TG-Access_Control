@@ -5,13 +5,11 @@ const documentos = connection.define("documentos", {
   doc_cpf: {
     type: Sequelize.CHAR(11),
     allowNull: false,
-    unique: true,
   },
 
   doc_cnh: {
     type: Sequelize.CHAR(11),
     allowNull: false,
-    unique: true,
   },
 
   doc_empresa: {
@@ -31,7 +29,7 @@ documentos.beforeCreate((documento, options) => {
     documento.doc_cnh = documento.doc_cnh.replace(/\D/g, ""); // Remove tudo que não for número
   }
 });
-//documentos.sync({ force: true });
+
 documentos.beforeUpdate((documento, options) => {
   // Remove formatação de CPF
   if (documento.doc_cpf) {
@@ -44,4 +42,6 @@ documentos.beforeUpdate((documento, options) => {
   }
 });
 
+//documentos.sync({});
+//documentos.sync({ force: true });
 module.exports = documentos;

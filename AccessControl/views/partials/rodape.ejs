@@ -113,10 +113,18 @@
       });
   
       // Adiciona o listener de input para CPF, Telefone e Placa
-      document.getElementById('cpf').addEventListener('input', aplicarMascaraCPF);
-      document.getElementById('placa').addEventListener('input', aplicarMascaraPlaca);
-      document.getElementById('telefones').addEventListener('input', aplicarMascaraTelefone);
-    });
+      document.querySelectorAll('[id*="telefone"]').forEach(function(input) {
+    input.addEventListener('input', aplicarMascaraTelefone);
+  });
+
+  document.querySelectorAll('[id*="cpf"]').forEach(function(input) {
+    input.addEventListener('input', aplicarMascaraCPF);
+  });
+
+  document.querySelectorAll('[id*="placa"]').forEach(function(input) {
+    input.addEventListener('input', aplicarMascaraPlaca);
+  });
+});
   </script>
   
   

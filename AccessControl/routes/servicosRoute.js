@@ -11,6 +11,7 @@ router.get("/listarservicos", checkLogin, servicoController.getAll);
 
 router.get("/editarservicos/:id", checkLogin, servicoController.getOne);
 router.post("/editarservicos/:id", checkLogin, servicoController.update);
+
 router.post("/:id/excluir", checkLogin, servicoController.delete);
 
 module.exports = router;
