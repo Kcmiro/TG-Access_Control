@@ -4,9 +4,16 @@ const fs = require("fs");
 const chaves = require("../models/chaves");
 
 exports.home = (req, res, next) => {
-  res.render("index");
+  if (req.session.Usuario) {
+    // Passando a variável usuario para o template EJS
+    res.render("index", { Usuario: req.session.Usuario });
+  } else {
+    res.redirect("/usuario/login");
+  }
 };
-
+exports.sair = (req, res, next) => {
+  res.render("/", { msg: "" });
+};
 exports.relatorio = (req, res, next) => {
   const { relatorio } = req.body;
   let msg = "";

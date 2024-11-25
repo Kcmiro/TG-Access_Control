@@ -63,6 +63,7 @@ exports.login = (req, res, next) => {
           req.session.Usuario = {
             id: Usuario.id,
             nome: Usuario.usuario_nome,
+            nivel: Usuario.usuario_nivel,
           };
           res.redirect("/");
         } else {

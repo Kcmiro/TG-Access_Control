@@ -43,6 +43,12 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use((req, res, next) => {
+  // Adiciona o usuário à variável global res.locals em todas as páginas
+  res.locals.Usuario = req.session.Usuario;
+  next();
+});
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
