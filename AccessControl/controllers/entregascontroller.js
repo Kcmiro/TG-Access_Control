@@ -5,6 +5,7 @@ const Documentos = require("../models/documentos");
 const Telefones = require("../models/telefone");
 const { where } = require("sequelize");
 const entregas = require("../models/entregas");
+const { Op } = require("sequelize");
 
 exports.mostrarEntregas = (req, res, next) => {
   res.render("entregascadastro", { msg: "" });
@@ -228,11 +229,34 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
-  Entregas.findAll({
-    order: [
-      ["id", "ASC"],
-      ["entregas_nome", "ASC"],
+  const query = req.query.query || "";
+  let whereCondition = {
+    [Op.or]: [
+      { entregas_nome: { [Op.like]: `%${query}%` } },
+      {
+        "$telefone.telefone$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cnh$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_empresa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cpf$": { [Op.like]: `%${query}%` },
+      },
     ],
+  };
+
+  Entregas.findAll({
+    where: whereCondition,
+    order: [["id", "ASC"]],
     attributes: ["id", "entregas_nome"],
     include: [
       {

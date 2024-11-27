@@ -13,12 +13,26 @@
           LISTA DE CHAVES CADASTRADAS
         </div>
         <div class="card-body">
-          <div class="d-grid col-4 mx-auto mb-3">
-            <a href="/chaves/chavescadastro" class="btn btn-secondary">
-              Cadastrar Chave
+          <div class="d-grid col-2 mx-auto mb-2">
+            <a
+              href="/chaves/chavescadastro"
+              class="btn btn-dark form-control-sm"
+            >
+              Cadastro
             </a>
           </div>
           <form method="get" action="/chaves/listarchaves">
+            <div class="form-floating d-flex justify-content-center mb-1">
+              <input
+                type="text"
+                name="query"
+                class="class=form-control-sm text-center"
+                placeholder="Pesquisar por N° ou Nome"
+              />
+              <button class="btn btn-success ms-1" type="submit">
+                Consultar
+              </button>
+            </div>
             <table class="table table-striped">
               <thead>
                 <tr>

@@ -1,5 +1,4 @@
 <%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
-
 <div class="container-fluid">
   <div class="row min-vh-100">
     <!-- Conteúdo principal (Lado Direito) -->
@@ -10,66 +9,77 @@
         >
           LISTA DE BICICLETÁRIOS
         </div>
-        <form method="get" action="/bicicletario/listarbicicletas">
-          <div class="card-body">
-            <% if (msg != '') { %>
-            <div
-              class="alert alert-success mx-auto mt-3 text-center"
-              role="alert"
-            >
-              <%= msg %>
-            </div>
-            <% } %>
 
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nome</th>
-                  <th>Cor</th>
-                  <th>Loja</th>
-                  <th>Telefone</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% bicicletarios.forEach((bicicletario) => { %>
-                <tr>
-                  <td><%= bicicletario.id %></td>
-                  <td><%= bicicletario.bike_nome %></td>
-                  <td><%= bicicletario.bike_cor %></td>
-                  <td><%= bicicletario.bike_loja %></td>
-                  <td class="telefone">
-                    <% if (bicicletario.telefone) { %> <%= bicicletario.telefone.telefone
-                    %> <% } else { %> Nenhum telefone registrado <% } %>
-                  </td>
-                  </td>
-
-                  <td>
-                    <a
-                      href="/bicicletario/editarbicicletas/<%= bicicletario.id %>"
-                      class="btn btn-warning btn-sm"
-                      >Editar</a
-                    >
-                    <form
-                      method="post"
-                      action="/bicicletario/<%= bicicletario.id %>/excluir"
-                      class="d-inline-block"
-                    >
-                      <button type="submit" class="btn btn-danger btn-sm">
-                        Excluir
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-                <% }) %>
-              </tbody>
-            </table>
+        <!-- Formulário de Pesquisa -->
+        <form method="get" action="/bicicletario/listarbicicletas" class="mb-3">
+          <div
+            class="form-floating d-flex justify-content-center rounded-4 pt-2"
+          >
+            <input
+              type="text"
+              name="query"
+              class="class=form-control-sm text-center"
+              placeholder="Pesquisar por nome, telefone ou loja"
+            />
+            <button class="btn btn-success ms-1" type="submit">
+              Consultar
+            </button>
           </div>
         </form>
+
+        <!-- Mensagem de Sucesso -->
+        <% if (msg != '') { %>
+        <div class="alert alert-success mx-auto mt-3 text-center" role="alert">
+          <%= msg %>
+        </div>
+        <% } %>
+
+        <!-- Tabela -->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Cor</th>
+              <th>Loja</th>
+              <th>Telefone</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bicicletarios.forEach((bicicletario) => { %>
+            <tr>
+              <td><%= bicicletario.id %></td>
+              <td><%= bicicletario.bike_nome %></td>
+              <td><%= bicicletario.bike_cor %></td>
+              <td><%= bicicletario.bike_loja %></td>
+              <td class="telefone">
+                <% if (bicicletario.telefone) { %> <%=
+                bicicletario.telefone.telefone %> <% } else { %> Nenhum telefone
+                registrado <% } %>
+              </td>
+              <td>
+                <a
+                  href="/bicicletario/editarbicicletas/<%= bicicletario.id %>"
+                  class="btn btn-warning btn-sm"
+                  >Editar</a
+                >
+                <form
+                  method="post"
+                  action="/bicicletario/<%= bicicletario.id %>/excluir"
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Excluir
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
 <%- include('./partials/rodape.ejs') %>

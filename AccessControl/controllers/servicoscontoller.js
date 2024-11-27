@@ -4,6 +4,7 @@ const Veiculos = require("../models/veiculos");
 const Documentos = require("../models/documentos");
 const Telefones = require("../models/telefone");
 const { where } = require("sequelize");
+const { Op } = require("sequelize");
 
 exports.mostrarServicos = (req, res, next) => {
   res.render("servicoscadastro", { msg: "" });
@@ -213,7 +214,32 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
+  const query = req.query.query || "";
+  let whereCondition = {
+    [Op.or]: [
+      { servico_nome: { [Op.like]: `%${query}%` } },
+      {
+        "$telefone.telefone$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cnh$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_empresa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cpf$": { [Op.like]: `%${query}%` },
+      },
+    ],
+  };
   Servicos.findAll({
+    where: whereCondition,
     include: [
       { model: Veiculos, attributes: ["veiculos_placa", "veiculos_modelo"] },
       { model: Telefones, attributes: ["telefone"] },

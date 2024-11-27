@@ -3,6 +3,7 @@ const Bicicletas = require("../models/bicicletario");
 const Telefones = require("../models/telefone");
 const { where, Model } = require("sequelize");
 const bicicletario = require("../models/bicicletario");
+const { Op } = require("sequelize");
 
 exports.mostrarBicicletas = (req, res, next) => {
   res.render("bicicletariocadastro", { msg: "" });
@@ -149,7 +150,20 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
+  const query = req.query.query || ""; // Pega o valor da pesquisa (caso exista)
+
+  let whereCondition = {
+    [Op.or]: [
+      { bike_nome: { [Op.like]: `%${query}%` } }, // Pesquisa por nome
+      { bike_loja: { [Op.like]: `%${query}%` } }, // Pesquisa por loja
+      {
+        "$telefone.telefone$": { [Op.like]: `%${query}%` }, // Pesquisa por telefone
+      },
+    ],
+  };
+
   Bicicletas.findAll({
+    where: whereCondition, // Aplica o filtro de pesquisa
     order: [
       ["id", "ASC"],
       ["bike_nome", "ASC"],
@@ -164,15 +178,13 @@ exports.getAll = (req, res, next) => {
     ],
   })
     .then((bicicletarios) => {
-      // Aqui estamos usando bicicletarios
-      console.log(bicicletarios);
       res.render("listarbicicletas", {
-        msg: "Lista encontradas",
+        msg: "Lista encontrada",
         bicicletarios: bicicletarios, // Passando a variável bicicletarios para a view
       });
     })
     .catch((err) => {
       console.log(err);
-      res.render("listarbicicletas", { msg: "ERRO AO BUSCAR BICICLETÁRIO" });
+      res.render("listarbicicletas", { msg: "Erro ao buscar bicicletários" });
     });
 };

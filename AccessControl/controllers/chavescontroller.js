@@ -1,6 +1,7 @@
 const express = require("express");
 const chaves = require("../models/chaves");
 const { where } = require("sequelize");
+const { Op } = require("sequelize");
 
 exports.mostrarChaves = (req, res, next) => {
   res.render("chavescadastro", { msg: "" });
@@ -123,8 +124,17 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
+  const query = req.query.query || ""; // Pega o valor da pesquisa (caso exista)
+
+  let whereCondition = {
+    [Op.or]: [
+      { chave_id: { [Op.like]: `%${query}%` } }, // Pesquisa por nome
+      { chave_nome: { [Op.like]: `%${query}%` } }, // Pesquisa por loja
+    ],
+  };
   chaves
     .findAll({
+      where: whereCondition,
       order: [["chave_id", "ASC"]],
       attributes: ["chave_id", "chave_nome"],
     })
