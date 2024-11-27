@@ -84,7 +84,7 @@ exports.relatorio = (req, res, next) => {
         // Tabela com bordas e preenchimentos
 
         const tableStartY = doc.y;
-        doc.font("Helvetica-Bold").fontSize(10).fillColor("#333");
+        doc.font("Helvetica-Bold").fontSize(12).fillColor("#333");
         doc.rect(50, tableStartY, 30, 16).stroke();
         doc.text("ID", 55, tableStartY + 5);
 
@@ -553,10 +553,17 @@ exports.relatorio = (req, res, next) => {
           });
 
           doc.rect(230, yPosition, 100, 14).stroke();
-          doc.text(`${bicicleta.telefone.telefone}`, 230, yPosition + 5, {
-            width: 90,
-            align: "center",
-          });
+          doc.text(
+            `${
+              bicicleta.telefone ? bicicleta.telefone.telefone : "Sem Telefone"
+            }`,
+            230,
+            yPosition + 5,
+            {
+              width: 90,
+              align: "center",
+            }
+          );
 
           doc.rect(330, yPosition, 120, 14).stroke();
           doc.text(`${bicicleta.bike_cor}`, 330, yPosition + 5, {
@@ -565,7 +572,7 @@ exports.relatorio = (req, res, next) => {
           });
 
           doc.rect(450, yPosition, 120, 14).stroke();
-          doc.text(`${bicicleta.bike_Loja}`, 450, yPosition + 5, {
+          doc.text(`${bicicleta.bike_loja}`, 450, yPosition + 5, {
             width: 110,
             align: "center",
           });
