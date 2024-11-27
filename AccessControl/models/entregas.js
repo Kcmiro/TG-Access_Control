@@ -10,6 +10,14 @@ const entregas = connection.define("entregas", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: "entregas",
+    validate: {
+      isIn: [["entregas"]],
+    },
+  },
 });
 
 entregas.beforeCreate((entrega, options) => {

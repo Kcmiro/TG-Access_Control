@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 const telefone = require("../models/telefone");
+const { toDefaultValue } = require("sequelize/lib/utils");
 
 const bicicletario = connection.define("bicicletario", {
   bike_nome: {
@@ -14,6 +15,14 @@ const bicicletario = connection.define("bicicletario", {
   bike_loja: {
     type: Sequelize.STRING,
     allowNull: true,
+  },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: "bike",
+    validate: {
+      isIn: [["bike"]],
+    },
   },
 });
 

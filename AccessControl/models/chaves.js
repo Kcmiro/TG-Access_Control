@@ -14,6 +14,14 @@ const chaves = connection.define("chaves", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: "chave",
+    validate: {
+      isIn: [["chave"]],
+    },
+  },
 });
 
 chaves.beforeCreate((chave, options) => {
