@@ -10,7 +10,8 @@ router.post("/entregascadastro", checkLogin, entregasController.create);
 router.get("/listarentregas", checkLogin, entregasController.getAll);
 
 router.get("/editarentregas/:id", checkLogin, entregasController.getOne);
-router.put("/editarentregas/:id", checkLogin, entregasController.update);
-router.post("/:id", checkLogin, entregasController.delete);
+router.post("/editarentregas/:id", checkLogin, entregasController.update);
+
+router.post("/:id/excluir", checkLogin, entregasController.delete);
 
 module.exports = router;

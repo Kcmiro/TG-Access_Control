@@ -14,12 +14,14 @@ const veiculos = connection.define("veiculos", {
 });
 
 veiculos.beforeCreate((veiculos, options) => {
-  // Remove qualquer formatação do CPF
   if (veiculos.veiculos_placa) {
     veiculos.veiculos_placa = veiculos.veiculos_placa.replace(
       /[^A-Za-z0-9]/g,
       ""
-    ); // Remove tudo que não for número
+    );
+
+    veiculos.veiculos_placa = veiculos.veiculos_placa.toUpperCase();
+    veiculos.veiculos_modelo = veiculos.veiculos_modelo.toUpperCase();
   }
 });
 
@@ -29,7 +31,9 @@ veiculos.beforeUpdate((veiculos, options) => {
     veiculos.veiculos_placa = veiculos.veiculos_placa.replace(
       /[^A-Za-z0-9]/g,
       ""
-    ); // Remove tudo que não for número
+    );
+    veiculos.veiculos_placa = veiculos.veiculos_placa.toUpperCase();
+    veiculos.veiculos_modelo = veiculos.veiculos_modelo.toUpperCase();
   }
 });
 

@@ -16,6 +16,19 @@ const servico = connection.define("servico", {
   },
 });
 
+servico.beforeCreate((servicos, options) => {
+  // A chave 'entregas_nome' será acessada como 'entregasNome' no código, graças ao underscored.
+  if (servicos.servico_nome) {
+    servicos.servico_nome = servicos.servico_nome.toUpperCase();
+  }
+});
+
+servico.beforeUpdate((servicos, options) => {
+  // A chave 'entregas_nome' será acessada como 'entregasNome' no código, graças ao underscored.
+  if (servicos.servico_nome) {
+    servicos.servico_nome = servicos.servico_nome.toUpperCase();
+  }
+});
 servico.belongsTo(Veiculo);
 servico.belongsTo(Telefone);
 servico.belongsTo(Documento);

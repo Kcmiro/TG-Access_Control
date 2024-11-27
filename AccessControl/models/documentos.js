@@ -28,6 +28,10 @@ documentos.beforeCreate((documento, options) => {
   if (documento.doc_cnh) {
     documento.doc_cnh = documento.doc_cnh.replace(/\D/g, ""); // Remove tudo que não for número
   }
+
+  if (documento.doc_empresa) {
+    documento.doc_empresa = documento.doc_empresa.toUpperCase();
+  }
 });
 
 documentos.beforeUpdate((documento, options) => {
@@ -39,6 +43,9 @@ documentos.beforeUpdate((documento, options) => {
   // Remove formatação de CNH
   if (documento.doc_cnh) {
     documento.doc_cnh = documento.doc_cnh.replace(/\D/g, "");
+  }
+  if (documento.doc_empresa) {
+    documento.doc_empresa = documento.doc_empresa.toUpperCase();
   }
 });
 

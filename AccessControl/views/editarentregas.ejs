@@ -6,7 +6,7 @@
       <!-- Card para o formulário de edição -->
       <div class="card shadow-lg">
         <div class="card-header bg-dark text-white text-center">
-          <h3>Editar Entrega: <%= entrega.entregas_nome %></h3>
+          <h3>Editar Entrega - <%= entrega.id %></h3>
         </div>
         <div class="card-body">
           <!-- Formulário de edição -->
@@ -39,7 +39,7 @@
                 class="form-control"
                 id="veiculos_placa"
                 name="veiculos_placa"
-                value="<%= entrega.Veiculos.veiculos_placa %>"
+                value="<%= entrega.veiculo.veiculos_placa %>"
                 required
               />
             </div>
@@ -54,7 +54,7 @@
                 class="form-control"
                 id="veiculos_modelo"
                 name="veiculos_modelo"
-                value="<%= entrega.Veiculos.veiculos_modelo %>"
+                value="<%= entrega.veiculo.veiculos_modelo %>"
                 required
               />
             </div>
@@ -67,7 +67,7 @@
                 class="form-control"
                 id="telefone"
                 name="telefone"
-                value="<%= entrega.Telefones[0].telefone %>"
+                value="<%= entrega.telefone.telefone %>"
                 required
               />
             </div>
@@ -80,7 +80,7 @@
                 class="form-control"
                 id="doc_cnh"
                 name="doc_cnh"
-                value="<%= entrega.Documentos.doc_cnh %>"
+                value="<%= entrega.documento.doc_cnh %>"
                 required
               />
             </div>
@@ -93,7 +93,7 @@
                 class="form-control"
                 id="doc_cpf"
                 name="doc_cpf"
-                value="<%= entrega.Documentos.doc_cpf %>"
+                value="<%= entrega.documento.doc_cpf %>"
                 required
               />
             </div>
@@ -106,7 +106,7 @@
                 class="form-control"
                 id="doc_empresa"
                 name="doc_empresa"
-                value="<%= entrega.Documentos.doc_empresa %>"
+                value="<%= entrega.documento.doc_empresa %>"
                 required
               />
             </div>

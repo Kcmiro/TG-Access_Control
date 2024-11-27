@@ -17,6 +17,29 @@ const bicicletario = connection.define("bicicletario", {
   },
 });
 
+bicicletario.beforeCreate((bike, options) => {
+  if (bike.bike_nome) {
+    bike.bike_nome = bike.bike_nome.toUpperCase();
+  }
+  if (bike.bike_cor) {
+    bike.bike_cor = bike.bike_cor.toUpperCase();
+  }
+  if (bike.bike_loja) {
+    bike.bike_loja = bike.bike_loja.toUpperCase();
+  }
+});
+
+bicicletario.beforeUpdate((bike, options) => {
+  if (bike.bike_nome) {
+    bike.bike_nome = bike.bike_nome.toUpperCase();
+  }
+  if (bike.bike_cor) {
+    bike.bike_cor = bike.bike_cor.toUpperCase();
+  }
+  if (bike.bike_loja) {
+    bike.bike_loja = bike.bike_loja.toUpperCase();
+  }
+});
 bicicletario.belongsTo(telefone);
 
 //bicicletario.sync({ force: true });

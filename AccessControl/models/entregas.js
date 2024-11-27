@@ -12,6 +12,19 @@ const entregas = connection.define("entregas", {
   },
 });
 
+entregas.beforeCreate((entrega, options) => {
+  // A chave 'entregas_nome' será acessada como 'entregasNome' no código, graças ao underscored.
+  if (entrega.entregas_nome) {
+    entrega.entregas_nome = entrega.entregas_nome.toUpperCase();
+  }
+});
+entregas.beforeUpdate((entrega, options) => {
+  // A chave 'entregas_nome' será acessada como 'entregasNome' no código, graças ao underscored.
+  if (entrega.entregas_nome) {
+    entrega.entregas_nome = entrega.entregas_nome.toUpperCase();
+  }
+});
+
 entregas.belongsTo(veiculos);
 entregas.belongsTo(telefone);
 entregas.belongsTo(documentos);

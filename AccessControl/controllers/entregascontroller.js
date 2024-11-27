@@ -29,138 +29,165 @@ exports.create = (req, res, next) => {
     !doc_cpf ||
     !doc_empresa
   ) {
-    return res.render("entregascadastro", { msg: "Preencha todos os campos" });
+    return res.render("servicoscadastro", { msg: "Preencha todos os campos" });
   }
 
-  // Verificando duplicidade antes de criar
+  // Verificando duplicidade antes de criar (agora verificando somente a combinação do serviço)
   Promise.all([
     Veiculos.findOne({ where: { veiculos_placa: veiculos_placa } }), // Verifica placa
     Telefones.findOne({ where: { telefone: telefone } }), // Verifica telefone
     Documentos.findOne({ where: { doc_cnh: doc_cnh } }), // Verifica CNH
     Documentos.findOne({ where: { doc_cpf: doc_cpf } }), // Verifica CPF
   ])
-    .then(
-      ([veiculoExistente, telefoneExistente, cnhExistente, cpfExistente]) => {
-        if (veiculoExistente) {
-          return res.render("entregascadastro", {
-            msg: "Placa de veículo já cadastrada",
-          });
-        }
-        if (telefoneExistente) {
-          return res.render("entregascadastro", {
-            msg: "Telefone já cadastrado",
-          });
-        }
-        if (cnhExistente) {
-          return res.render("entregascadastro", { msg: "CNH já cadastrada" });
-        }
-        if (cpfExistente) {
-          return res.render("entregascadastro", { msg: "CPF já cadastrado" });
-        }
-
-        // Se não houver duplicidade, cria o veiculo, telefone, documento e entrega
-      }
-    )
-    .catch((err) => {
-      console.log(err);
-      res.render("entregascadastro", {
-        msg: "Erro ao verificar dados de duplicidade",
+    .then(([veiculoExistente, telefoneExistente, docExistente]) => {
+      // Se não houver duplicidade, cria o veiculo, telefone, documento e serviço
+      return Promise.all([
+        // Cria os registros se não existirem
+        veiculoExistente ||
+          Veiculos.create({
+            veiculos_placa: veiculos_placa,
+            veiculos_modelo: veiculos_modelo,
+          }),
+        telefoneExistente ||
+          Telefones.create({
+            telefone: telefone,
+          }),
+        docExistente ||
+          Documentos.create({
+            doc_cnh: doc_cnh,
+            doc_cpf: doc_cpf,
+            doc_empresa: doc_empresa,
+          }),
+      ]);
+    })
+    .then(([veiculo, tel, doc]) => {
+      // Agora cria o serviço com as chaves estrangeiras
+      return Entregas.create({
+        entregas_nome: entregas_nome,
+        veiculoId: veiculo.id, // Referência para o veiculo
+        telefoneId: tel.id, // Referência para o telefone
+        documentoId: doc.id, // Referência para o documento
       });
-    });
-};
-
-exports.update = (req, res, next) => {
-  const id = req.body.id;
-  const entregas_nome = req.body.entregas_nome;
-  const veiculos_placa = req.body.veiculos_placa;
-  const veiculos_modelo = req.body.veiculos_placa;
-  const telefone = req.body.telefone;
-  const doc_cnh = req.body.doc_cnh;
-  const doc_cpf = req.body.doc_cpf;
-  const doc_empresa = req.body.doc_empresa;
-
-  if (
-    !entregas_nome ||
-    !veiculos_placa ||
-    !veiculos_modelo ||
-    !telefone ||
-    !doc_cnh ||
-    !doc_cpf ||
-    !doc_empresa
-  ) {
-    res.render("entregas", { msg: "Preencha todos os campos" });
-  }
-  Entregas.findOne({
-    where: {
-      [Sequelize.Op.or]: [
-        { veiculos_placa: veiculos_placa },
-        { telefone: telefone },
-        { doc_cnh: doc_cnh },
-        { doc_cpf: doc_cpf },
-      ],
-    },
-  }).then((entregaExistente) => {
-    if (entregaExistente) {
-      if (entregaExistente.veiculos_placa === veiculos_placa) {
-        return res.render("entregas", { msg: "Placa já existe" });
-      }
-      if (entregaExistente.telefone === telefone) {
-        return res.render("entregas", { msg: "Telefone já existe" });
-      }
-      if (entregaExistente.doc_cnh === doc_cnh) {
-        return res.render("entregas", { msg: "CNH já existe" });
-      }
-      if (entregaExistente.doc_cpf === doc_cpf) {
-        return res.render("entregas", { msg: "CPF já existe" });
-      }
-    }
-  });
-
-  Entregas.update(
-    {
-      entregas_nome: entregas_nome,
-      veiculos_placa: veiculos_placa,
-      veiculos_modelo: veiculos_modelo,
-      telefone: telefone,
-      doc_cnh: doc_cnh,
-      doc_cpf: doc_cpf,
-      doc_empresa: doc_empresa,
-    },
-    {
-      where: {
-        id: id,
-      },
-    }
-      .then((resultado) => {
-        res.render("entregas", {
-          msg: "Entrega alterada",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.render("entregas", { msg: "Erro na Alteração de Entregas" });
-      })
-  );
-};
-
-exports.delete = (req, res, next) => {
-  const id = req.body.id;
-
-  Entregas.destroy({
-    where: {
-      id: id,
-    },
-  })
-    .then(() => {
-      res.render("entregas", {
-        msg: "Entregador excluída",
+    })
+    .then((servicocriado) => {
+      res.render("servicoscadastro", {
+        msg: "Servico cadastrada com sucesso",
+        servico: servicocriado,
       });
     })
     .catch((err) => {
       console.log(err);
-      res.render("entregas", {
-        msg: "Erro na exclusão do Entregador",
+      res.render("servicoscadastro", { msg: "Erro ao cadastrar Servico" });
+    });
+};
+
+exports.update = async (req, res) => {
+  const {
+    entregas_nome,
+    telefone,
+    veiculos_placa,
+    veiculos_modelo,
+    doc_cnh,
+    doc_cpf,
+    doc_empresa,
+  } = req.body;
+
+  const entregaId = req.params.id; // ID do serviço a ser atualizado
+
+  try {
+    // Buscar o serviço
+    const entrega = await Entregas.findByPk(entregaId);
+
+    if (!entrega) {
+      return res.status(404).send("Serviço não encontrado");
+    }
+
+    // Buscar ou criar o telefone
+    let telefoneRecord = await Telefones.findOne({
+      where: { telefone: telefone },
+    });
+
+    if (!telefoneRecord) {
+      // Se o telefone não existir, cria um novo
+      telefoneRecord = await Telefones.create({ telefone });
+    }
+
+    // Buscar ou atualizar o veículo
+    let veiculoRecord = await Veiculos.findOne({
+      where: { veiculos_placa: veiculos_placa },
+    });
+
+    if (!veiculoRecord) {
+      // Se o veículo não existir, cria um novo
+      veiculoRecord = await Veiculos.create({
+        veiculos_placa: veiculos_placa,
+        veiculos_modelo: veiculos_modelo,
       });
+    } else {
+      // Se o veículo existir, atualiza os dados
+      veiculoRecord.veiculos_placa = veiculos_placa;
+      veiculoRecord.veiculos_modelo = veiculos_modelo;
+      await veiculoRecord.save();
+    }
+
+    // Buscar ou atualizar o documento (verificar doc_cnh)
+    let documentoRecord = await Documentos.findOne({
+      where: { doc_cnh },
+    });
+
+    if (!documentoRecord) {
+      // Se o documento não existir, cria um novo
+      documentoRecord = await Documentos.create({
+        doc_cnh,
+        doc_cpf,
+        doc_empresa,
+      });
+    } else {
+      // Verificando se o doc_cnh foi alterado e deve ser atualizado
+      if (documentoRecord.doc_cnh !== doc_cnh) {
+        // Atualiza o CNH apenas se for diferente
+        documentoRecord.doc_cnh = doc_cnh;
+      }
+
+      // Verificando se o CPF foi alterado e deve ser atualizado
+      if (documentoRecord.doc_cpf !== doc_cpf) {
+        // Atualiza o CPF se for diferente
+        documentoRecord.doc_cpf = doc_cpf;
+      }
+
+      // Atualiza o nome da empresa, sempre
+      documentoRecord.doc_empresa = doc_empresa;
+
+      // Salva as mudanças no banco
+      await documentoRecord.save();
+    }
+
+    // Atualizar os dados do serviço
+    entrega.entregas_nome = entregas_nome;
+    entrega.telefoneId = telefoneRecord.id; // Atualiza com o id do telefone
+    entrega.veiculoId = veiculoRecord.id; // Atualiza com o id do veículo
+    entrega.documentoId = documentoRecord.id; // Atualiza com o id do documento
+
+    // Salvar o serviço com as novas informações
+    await entrega.save();
+
+    // Redirecionar após a atualização
+    res.redirect("/entregas/listarentregas"); // Redireciona para a página de serviços (ajuste conforme necessário)
+  } catch (error) {
+    console.error("Erro ao atualizar serviço:", error);
+    res.status(500).send("Erro ao atualizar serviço");
+  }
+};
+
+exports.delete = (req, res, next) => {
+  const id = req.params.id;
+  Entregas.destroy({ where: { id: id } })
+    .then(() => {
+      res.redirect("/entregas/listarentregas");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/entregas/listarentregas");
     });
 };
 
@@ -202,7 +229,10 @@ exports.getOne = (req, res, next) => {
 
 exports.getAll = (req, res, next) => {
   Entregas.findAll({
-    order: [["entregas_nome", "ASC"]],
+    order: [
+      ["id", "ASC"],
+      ["entregas_nome", "ASC"],
+    ],
     attributes: ["id", "entregas_nome"],
     include: [
       {
