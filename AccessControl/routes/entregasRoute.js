@@ -14,4 +14,7 @@ router.post("/editarentregas/:id", checkLogin, entregasController.update);
 
 router.post("/:id/excluir", checkLogin, entregasController.delete);
 
+router.get("/consultarentregas", checkLogin, entregasController.getAllPatio);
+router.get("/patioentregas/:id", checkLogin, entregasController.getOnePatio);
+
 module.exports = router;

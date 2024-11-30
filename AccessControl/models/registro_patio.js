@@ -7,6 +7,7 @@ const bicicletario = require("./registro_chave");
 const entregas = require("./entregas");
 const servico = require("./servicos");
 const registro_chave = require("./registro_chave");
+const lojas = require("./lojas");
 
 const registro_patio = connection.define("registro_patio", {
   patio_horaentrada: {
@@ -26,7 +27,8 @@ registro_patio.belongsTo(entregas);
 registro_patio.belongsTo(servico);
 registro_patio.belongsTo(registro_chave);
 registro_patio.belongsTo(bicicletario);
+registro_patio.belongsTo(lojas);
 
+//registro_patio.sync({});
 //registro_patio.sync({ force: true });
-
 module.exports = registro_patio;

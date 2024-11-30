@@ -14,7 +14,7 @@
           CADASTRO DE ENTREGAS
         </div>
         <div class="card-body">
-          <form method="post" action="/entregas/entregascadastro">
+          <form method="get" action="/entregas/consultarentregas">
             <div
               class="form-floating d-flex justify-content-center rounded-4 pt-1"
             >
@@ -26,6 +26,8 @@
               />
               <button class="btn btn-dark ms-1" type="submit">Consultar</button>
             </div>
+          </form>
+          <form method="post" action="/entregas/entregascadastro">
             <div class="row mt-2">
               <!-- Coluna para Entregador e Celular -->
               <div class="col-md-6 mb-2">

@@ -1,9 +1,6 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const entregas = require("../models/entregas");
-const servico = require("../models/servicos");
-
 const lojas = connection.define("lojas", {
   lojaNome: {
     type: Sequelize.STRING,
@@ -11,6 +8,6 @@ const lojas = connection.define("lojas", {
   },
 });
 
-//lojas.sync({force: true});
-
+//lojas.sync({});
+//lojas.sync({ force: true });
 module.exports = lojas;

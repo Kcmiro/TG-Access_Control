@@ -1,0 +1,106 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 800px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          REGISTRAR PÁTIO
+        </div>
+        <div class="card-body col-sm-12">
+          <form method="post" action="/patio/<%= entrega.id %>">
+            <!-- Dados Existentes -->
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="entregas_nome"
+                class="form-control"
+                id="entregas_nome"
+                value="<%= entrega.entregas_nome %>"
+                disabled
+              />
+              <label for="entregas_nome">Nome do Entregador</label>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="veiculos_placa"
+                class="form-control"
+                id="veiculos_placa"
+                value="<%= entrega.veiculo.veiculos_placa %>"
+                disabled
+              />
+              <label for="veiculos_placa">Placa do Veículo</label>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="veiculos_modelo"
+                class="form-control"
+                id="veiculos_modelo"
+                value="<%= entrega.veiculo.veiculos_modelo %>"
+                disabled
+              />
+              <label for="veiculos_modelo">Modelo do Veículo</label>
+            </div>
+
+            <!-- Campos para Dados do Entregador (CNH, CPF, etc.) -->
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="doc_cnh"
+                class="form-control"
+                value="<%= entrega.documento.doc_cnh %>"
+                disabled
+              />
+              <label for="doc_cnh">CNH</label>
+            </div>
+
+            <div class="form-floating mb-2">
+              <input
+                type="text"
+                name="doc_cpf"
+                class="form-control"
+                value="<%= entrega.documento.doc_cpf %>"
+                disabled
+              />
+              <label for="doc_cpf">CPF</label>
+            </div>
+
+            <!-- Campo para Inserção da Loja -->
+            <div id="lojas-container">
+              <div class="d-flex align-items-center mb-3 loja">
+                <div class="col-md-6 mb-2">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lojaNome"
+                      name="lojaNome"
+                      required
+                      placeholder="Nome da Loja"
+                    />
+                    <label for="loja">Loja</label>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Botões de Ação -->
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-danger">Registrar</button>
+              <a href="/entregas/entregascadastro" class="btn btn-secondary"
+                >Cancelar</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/rodape.ejs') %> <%- include('./partials/rodape.ejs') %>

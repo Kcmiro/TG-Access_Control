@@ -29,6 +29,7 @@ const entregasRoute = require("./routes/entregasRoute");
 const servicoRoute = require("./routes/servicosRoute");
 const chavesRoute = require("./routes/chavesRoute");
 const bicicletarioRoute = require("./routes/bicicletarioRoute");
+const patioRoute = require("./routes/patioRoute");
 
 const app = express();
 
@@ -77,7 +78,7 @@ app.use("/entregas", entregasRoute);
 app.use("/servicos", servicoRoute);
 app.use("/chaves", chavesRoute);
 app.use("/bicicletario", bicicletarioRoute);
-
+app.use("/patio", patioRoute);
 app.use(methodOverride("_method"));
 
 module.exports = app;

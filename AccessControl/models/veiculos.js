@@ -37,4 +37,5 @@ veiculos.beforeUpdate((veiculos, options) => {
   }
 });
 
+//veiculos.sync({ force: true });
 module.exports = veiculos;
