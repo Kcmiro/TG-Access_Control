@@ -1,10 +1,65 @@
 <!-- index.ejs -->
-<%- include('./partials/header.ejs') %>
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
 <div class="container-fluid">
-  <div class="row">
-    <%- include('./partials/sidebar.ejs') %>
-    <div class="col-md-9 ml-auto" style="margin-top: 60px">
-      <div class="container">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 1150px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          PÁTIO
+        </div>
+          <div
+            class="form-floating d-flex justify-content-center rounded-4 pt-2"
+          >
+            <input
+              type="text"
+              name="query"
+              class="class=form-control-sm text-center"
+              placeholder="Pesquisar por nome, telefone ou loja"
+            />
+            <button class="btn btn-success ms-1" type="submit">
+              Consultar
+            </button>
+          </div>
+        </form>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Entrada</th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Status</th>
+              <th>Placa</th>
+              <th>Empresa</th>
+              <th>Loja</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <form
+                  method="post"
+                  action=""
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Finalizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

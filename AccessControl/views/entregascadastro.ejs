@@ -15,7 +15,18 @@
         </div>
         <div class="card-body">
           <form method="post" action="/entregas/entregascadastro">
-            <div class="row">
+            <div
+              class="form-floating d-flex justify-content-center rounded-4 pt-1"
+            >
+              <input
+                type="text"
+                name="query"
+                class="class=form-control-sm"
+                placeholder="Verificar Registro...."
+              />
+              <button class="btn btn-dark ms-1" type="submit">Consultar</button>
+            </div>
+            <div class="row mt-2">
               <!-- Coluna para Entregador e Celular -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">

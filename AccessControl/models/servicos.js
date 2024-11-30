@@ -14,6 +14,14 @@ const servico = connection.define("servico", {
     type: Sequelize.TEXT("long"),
     allowNull: true,
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: "servicos",
+    validate: {
+      isIn: [["servicos"]],
+    },
+  },
 });
 
 servico.beforeCreate((servicos, options) => {
