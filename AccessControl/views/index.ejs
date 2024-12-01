@@ -1,5 +1,5 @@
-<!-- index.ejs -->
 <%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
 <div class="container-fluid">
   <div class="row min-vh-100">
     <!-- Conteúdo principal (Lado Direito) -->
@@ -10,58 +10,63 @@
         >
           PÁTIO
         </div>
-          <div
-            class="form-floating d-flex justify-content-center rounded-4 pt-2"
-          >
-            <input
-              type="text"
-              name="query"
-              class="class=form-control-sm text-center"
-              placeholder="Pesquisar por nome, telefone ou loja"
-            />
-            <button class="btn btn-success ms-1" type="submit">
-              Consultar
-            </button>
-          </div>
+        <div class="form-floating d-flex justify-content-center rounded-4 pt-2">
+          <input
+            type="text"
+            name="query"
+            class="form-control-sm text-center"
+            placeholder="Pesquisar por nome, telefone ou loja"
+          />
+          <button class="btn btn-success ms-1" type="submit">Consultar</button>
+        </div>
+        <form method="post" action="">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Entrada</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Status</th>
+                <th>Placa</th>
+                <th>Empresa</th>
+                <th>Loja</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% patios.forEach(patio => { %>
+              <tr>
+                <td><%= patio.patio_horaentrada %></td>
+                <td><%= patio.entrega.entregas_nome %></td>
+                <!-- Fechado corretamente -->
+                <td class="telefone">
+                  <% if (patio.telefone) { %> <%= patio.telefone.telefone %> <%
+                  } else { %> Nenhum telefone registrado <% } %>
+                </td>
+                <td><%= patio.entrega.status %></td>
+                <td class="placa">
+                  <% if (patio.veiculo) { %>
+                  <!-- Corrigido de "entrega.veiculo" para "patio.veiculo" -->
+                  <span><%= patio.veiculo.veiculos_placa %></span>
+                  <% } else { %> Nenhum veículo associado <% } %>
+                </td>
+                <td><%= patio.documento.doc_empresa %></td>
+                <td><%= patio.loja.lojaNome %></td>
+                <td>
+                  <form method="post" action="" class="d-inline-block">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      Finalizar
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
         </form>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Entrada</th>
-              <th>Nome</th>
-              <th>Telefone</th>
-              <th>Status</th>
-              <th>Placa</th>
-              <th>Empresa</th>
-              <th>Loja</th>
-              <th>Ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <form
-                  method="post"
-                  action=""
-                  class="d-inline-block"
-                >
-                  <button type="submit" class="btn btn-danger btn-sm">
-                    Finalizar
-                  </button>
-                </form>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>
 </div>
+
 <%- include('./partials/rodape.ejs') %>

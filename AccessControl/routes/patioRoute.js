@@ -6,4 +6,6 @@ const entregasController = require("../controllers/entregascontroller");
 const checkLogin = require("../middleware/checkLogin");
 
 router.post("/:id", checkLogin, patioController.patioEntregas);
+
+router.get("/", patioController.patio);
 module.exports = router;
