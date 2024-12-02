@@ -69,27 +69,52 @@ exports.patioEntregas = async (req, res, next) => {
   }
 };
 
+exports.patioSaida = (req, res, next) => {
+  const patio_horasaida = new Date();
+  const patioId = req.params.id; // Supondo que o ID do 'patio' é passado via body
+
+  // Adicionando a condição WHERE
+  Patio.update(
+    { patio_horasaida: patio_horasaida }, // Atributos que serão atualizados
+    { where: { id: patioId } } // Condição WHERE para identificar o registro a ser atualizado
+  )
+    .then(() => {
+      res.redirect("/patio/patio"); // Redireciona para a lista de chaves
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/patio/patio"); // Em caso de erro, redireciona de volta
+    });
+};
+
 exports.patio = (req, res, next) => {
   const query = req.query.query || "";
   let whereCondition = {
-    [Op.or]: [
+    [Op.and]: [
       {
-        "$entrega.telefone.telefone$": { [Op.like]: `%${query}%` },
+        [Op.or]: [
+          {
+            "$entrega.telefone.telefone$": { [Op.like]: `%${query}%` },
+          },
+          {
+            "$entrega.veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
+          },
+          {
+            "$entrega.veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
+          },
+          {
+            "$entrega.documento.doc_cnh$": { [Op.like]: `%${query}%` },
+          },
+          {
+            "$entrega.documento.doc_empresa$": { [Op.like]: `%${query}%` },
+          },
+          {
+            "$entrega.documento.doc_cpf$": { [Op.like]: `%${query}%` },
+          },
+        ],
       },
       {
-        "$entrega.veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
-      },
-      {
-        "$entrega.veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
-      },
-      {
-        "$entrega.documento.doc_cnh$": { [Op.like]: `%${query}%` },
-      },
-      {
-        "$entrega.documento.doc_empresa$": { [Op.like]: `%${query}%` },
-      },
-      {
-        "$entrega.documento.doc_cpf$": { [Op.like]: `%${query}%` },
+        patio_horaentrada: { [Op.col]: "patio_horasaida" },
       },
     ],
   };
@@ -97,7 +122,7 @@ exports.patio = (req, res, next) => {
   Patio.findAll({
     where: whereCondition,
     order: [["patio_horaentrada", "ASC"]],
-    attributes: ["id", "patio_horaentrada"],
+    attributes: ["id", "patio_horaentrada", "patio_horasaida"],
     include: [
       {
         model: Entregas,
