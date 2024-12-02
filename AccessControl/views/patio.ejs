@@ -1,0 +1,79 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 1150px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          PÁTIO
+        </div>
+        <div class="form-floating d-flex justify-content-center rounded-4 pt-2">
+          <!-- Formulário de Pesquisa -->
+          <form method="get" action="/patio/patio" class="d-flex">
+            <input
+              type="text"
+              name="query"
+              class="form-control-sm text-center"
+              placeholder="Consultar Patio..."
+            />
+            <button class="btn btn-success ms-1" type="submit">
+              Consultar
+            </button>
+          </form>
+        </div>
+        <!-- Tabela de Resultados -->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Entrada</th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Status</th>
+              <th>Placa</th>
+              <th>Empresa</th>
+              <th>Loja</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (patios && patios.length > 0) { %> <%
+            patios.forEach(function(patio) { %>
+            <tr>
+              <!-- Exibindo os dados do patio -->
+              <td>
+                <%= new Date(patio.patio_horaentrada).toLocaleString('pt-BR', {
+                month: 'short', day: '2-digit', hour: '2-digit', minute:
+                '2-digit' }) %>
+              </td>
+              <td><%= patio.entrega.entregas_nome.split(' ')[0] %></td>
+              <td class="telefone"><%= patio.entrega.telefone.telefone %></td>
+              <td><%= patio.entrega.status %></td>
+              <td class="placa"><%= patio.entrega.veiculo.veiculos_placa %></td>
+              <td><%= patio.entrega.documento.doc_empresa.split(' ')[0] %></td>
+              <td><%= patio.loja.lojaNome.split(' ')[0] %></td>
+              <!-- Acessando diretamente o nome da loja -->
+              <td>
+                <form method="post" action="" class="d-inline-block">
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Finalizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %> <% } else { %>
+            <!-- Caso não haja registros -->
+            <tr>
+              <td colspan="8" class="text-center">Nenhum dado encontrado.</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>

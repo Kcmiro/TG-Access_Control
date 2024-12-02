@@ -34,24 +34,14 @@
               </tr>
             </thead>
             <tbody>
-              <% patios.forEach(patio => { %>
               <tr>
-                <td><%= patio.patio_horaentrada %></td>
-                <td><%= patio.entrega.entregas_nome %></td>
-                <!-- Fechado corretamente -->
-                <td class="telefone">
-                  <% if (patio.telefone) { %> <%= patio.telefone.telefone %> <%
-                  } else { %> Nenhum telefone registrado <% } %>
-                </td>
-                <td><%= patio.entrega.status %></td>
-                <td class="placa">
-                  <% if (patio.veiculo) { %>
-                  <!-- Corrigido de "entrega.veiculo" para "patio.veiculo" -->
-                  <span><%= patio.veiculo.veiculos_placa %></span>
-                  <% } else { %> Nenhum veículo associado <% } %>
-                </td>
-                <td><%= patio.documento.doc_empresa %></td>
-                <td><%= patio.loja.lojaNome %></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>
                   <form method="post" action="" class="d-inline-block">
                     <button type="submit" class="btn btn-danger btn-sm">
@@ -60,7 +50,6 @@
                   </form>
                 </td>
               </tr>
-              <% }) %>
             </tbody>
           </table>
         </form>

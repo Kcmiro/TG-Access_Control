@@ -74,22 +74,22 @@ exports.patio = (req, res, next) => {
   let whereCondition = {
     [Op.or]: [
       {
-        "$telefone.telefone$": { [Op.like]: `%${query}%` },
+        "$entrega.telefone.telefone$": { [Op.like]: `%${query}%` },
       },
       {
-        "$veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
+        "$entrega.veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
       },
       {
-        "$veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
+        "$entrega.veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
       },
       {
-        "$documento.doc_cnh$": { [Op.like]: `%${query}%` },
+        "$entrega.documento.doc_cnh$": { [Op.like]: `%${query}%` },
       },
       {
-        "$documento.doc_empresa$": { [Op.like]: `%${query}%` },
+        "$entrega.documento.doc_empresa$": { [Op.like]: `%${query}%` },
       },
       {
-        "$documento.doc_cpf$": { [Op.like]: `%${query}%` },
+        "$entrega.documento.doc_cpf$": { [Op.like]: `%${query}%` },
       },
     ],
   };
@@ -101,38 +101,39 @@ exports.patio = (req, res, next) => {
     include: [
       {
         model: Entregas,
-        model: true,
         attributes: ["entregas_nome", "status"],
+        include: [
+          {
+            model: Veiculos,
+            attributes: ["veiculos_placa", "veiculos_modelo"],
+          },
+          {
+            model: Documentos,
+            attributes: ["doc_empresa", "doc_cnh", "doc_cpf"],
+          },
+          {
+            model: Telefones,
+            attributes: ["telefone"],
+          },
+        ],
       },
       {
-        model: Veiculos,
-        required: true, // Corrigido de "require" para "required"
-        attributes: ["veiculos_placa"],
-      },
-      {
-        model: Documentos,
-        required: true, // Corrigido de "require" para "required"
-        attributes: ["doc_empresa"],
-      },
-      {
-        model: Telefones,
-        required: true, // Corrigido de "require" para "required"
-        attributes: ["telefone"],
+        model: Lojas, // Aqui não usamos alias, pois é uma associação direta
+        attributes: ["lojaNome"], // Incluindo dados da tabela Lojas
       },
     ],
   })
     .then((patios) => {
-      // Passando os dados de entregas para a visualização
-      res.render("index", {
-        patios: patios, // Aqui você passa os dados para o EJS
-        msg: "", // Caso precise de uma mensagem
+      res.render("patio", {
+        patios: patios,
+        msg: "", // Mensagem de sucesso
       });
     })
     .catch((err) => {
       console.error(err);
-      res.render("index", {
-        entregas: [], // Caso ocorra algum erro, você pode passar um array vazio
-        msg: "Erro ao carregar as entregas.", // Mensagem de erro
+      res.render("patio", {
+        patios: [],
+        msg: "Erro ao carregar as entregas.",
       });
     });
 };

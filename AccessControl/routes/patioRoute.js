@@ -7,5 +7,5 @@ const checkLogin = require("../middleware/checkLogin");
 
 router.post("/:id", checkLogin, patioController.patioEntregas);
 
-router.get("/", patioController.patio);
+router.get("/patio", patioController.patio);
 module.exports = router;
