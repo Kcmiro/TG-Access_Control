@@ -188,3 +188,74 @@ exports.getAll = (req, res, next) => {
       res.render("listarbicicletas", { msg: "Erro ao buscar bicicletários" });
     });
 };
+
+exports.getAllPatio = (req, res, next) => {
+  const query = req.query.query || ""; // Pega o valor da pesquisa (caso exista)
+
+  let whereCondition = {
+    [Op.or]: [
+      { bike_nome: { [Op.like]: `%${query}%` } }, // Pesquisa por nome
+      { bike_loja: { [Op.like]: `%${query}%` } }, // Pesquisa por loja
+      {
+        "$telefone.telefone$": { [Op.like]: `%${query}%` }, // Pesquisa por telefone
+      },
+    ],
+  };
+
+  Bicicletas.findAll({
+    where: whereCondition, // Aplica o filtro de pesquisa
+    order: [
+      ["id", "ASC"],
+      ["bike_nome", "ASC"],
+    ],
+    attributes: ["id", "bike_nome", "bike_cor", "bike_loja"],
+    include: [
+      {
+        model: Telefones,
+        required: true,
+        attributes: ["telefone"],
+      },
+    ],
+  })
+    .then((bicicletarios) => {
+      res.render("consultarbicicletas", {
+        msg: "Lista encontrada",
+        bicicletarios: bicicletarios, // Passando a variável bicicletarios para a view
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("consultarbicicletas", {
+        msg: "Erro ao buscar bicicletários",
+      });
+    });
+};
+
+exports.getOnePatio = (req, res, next) => {
+  const id = req.params.id; // Obtenha o id da bicicleta da URL
+
+  // Buscando a bicicleta com o relacionamento de telefone
+  Bicicletas.findByPk(id, {
+    include: [
+      {
+        model: Telefones, // Incluindo o modelo Telefones
+        attributes: ["telefone"], // Pegando apenas o campo telefone
+      },
+    ],
+  })
+    .then((bicicletario) => {
+      // Verifica se a bicicleta foi encontrada
+      if (!bicicletario) {
+        return res.redirect("/bicicletario/listarbicicletas"); // Redireciona se não encontrar a bicicleta
+      }
+      // Renderiza a página de edição com os dados da bicicleta
+      res.render("editarbicicletas", {
+        msg: "Bicicleta encontrada", // Mensagem para o usuário
+        bicicletario: bicicletario, // Passando os dados da bicicleta para o formulário
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/bicicletario/listarbicicletas"); // Em caso de erro, redireciona para a lista de bicicletas
+    });
+};

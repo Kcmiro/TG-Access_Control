@@ -1,0 +1,89 @@
+<%- include('./partials/header.ejs') %>
+<!-- Inclui o cabeçalho -->
+<%- include('./partials/sidebar.ejs') %>
+<!-- Inclui a sidebar apenas uma vez -->
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 1200px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          LISTA DE SERVIÇOS CADASTRADOS
+        </div>
+        <div class="card-body">
+          <!-- Botão para cadastrar novo serviço -->
+          <!-- Formulário para listar serviços -->
+          <form method="get" action="/servicos/consultarservicos">
+            <div class="form-floating d-flex justify-content-center mb-1">
+              <input
+                type="text"
+                name="query"
+                class="class=form-control-sm"
+                placeholder="Pesquisar..."
+              />
+              <button class="btn btn-success ms-1" type="submit">
+                Consultar
+              </button>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Veículo</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">CPF</th>
+                  <th scope="col">CNH</th>
+                  <th scope="col">Empresa</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% servicos.forEach(servico => { %>
+                <tr>
+                  <td><%= servico.id %></td>
+                  <td><%= servico.servico_nome %></td>
+                  <td class="placa">
+                    <% if (servico.veiculo) { %>
+                    <span><%= servico.veiculo.veiculos_placa %></span>
+                    <% } else { %> Nenhum veículo associado <% } %>
+                  </td>
+
+                  <!-- Exibindo telefone com formatação -->
+                  <td class="telefone">
+                    <% if (servico.telefone) { %> <%= servico.telefone.telefone
+                    %> <% } else { %> Nenhum telefone registrado <% } %>
+                  </td>
+
+                  <!-- Exibindo CPF com formatação -->
+                  <td class="cpf"><%= servico.documento.doc_cpf %></td>
+
+                  <!-- Exibindo CNH com formatação -->
+                  <td class="cnh"><%= servico.documento.doc_cnh %></td>
+
+                  <td><%= servico.documento.doc_empresa %></td>
+
+                  <td>
+                    <!-- Botão para editar o serviço -->
+                    <a
+                      href="/servicos/patioservicos/<%= servico.id %>"
+                      class="btn btn-warning btn-sm"
+                      >Registrar</a
+                    >
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
+<!-- Inclui o rodapé -->

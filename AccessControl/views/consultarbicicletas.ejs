@@ -1,0 +1,66 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Conteúdo principal (Lado Direito) -->
+    <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
+      <div class="card rounded-4" style="width: 100%; max-width: 1000px">
+        <div
+          class="card-header bg-dark text-white font-weight-bold text-center"
+        >
+          LISTA DE BICICLETÁRIOS
+        </div>
+
+        <!-- Formulário de Pesquisa -->
+        <form
+          method="get"
+          action="/bicicletario/consultarbicicletas"
+          class="mb-3"
+        ></form>
+
+        <!-- Mensagem de Sucesso -->
+        <% if (msg != '') { %>
+        <div class="alert alert-success mx-auto mt-3 text-center" role="alert">
+          <%= msg %>
+        </div>
+        <% } %>
+
+        <!-- Tabela -->
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Cor</th>
+              <th>Loja</th>
+              <th>Telefone</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bicicletarios.forEach((bicicletario) => { %>
+            <tr>
+              <td><%= bicicletario.id %></td>
+              <td><%= bicicletario.bike_nome %></td>
+              <td><%= bicicletario.bike_cor %></td>
+              <td><%= bicicletario.bike_loja %></td>
+              <td class="telefone">
+                <% if (bicicletario.telefone) { %> <%=
+                bicicletario.telefone.telefone %> <% } else { %> Nenhum telefone
+                registrado <% } %>
+              </td>
+              <td>
+                <a
+                  href="/bicicletario/patiobicicletas/<%= bicicletario.id %>"
+                  class="btn btn-danger btn-sm"
+                  >Registrar</a
+                >
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/rodape.ejs') %>

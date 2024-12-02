@@ -254,3 +254,103 @@ exports.getAll = (req, res, next) => {
       res.render("listarservicos", { msg: "Erro ao buscar serviços" });
     });
 };
+
+exports.getAllPatio = (req, res, next) => {
+  const query = req.query.query || "";
+  let whereCondition = {
+    [Op.or]: [
+      { servicos_nome: { [Op.like]: `%${query}%` } },
+      {
+        "$telefone.telefone$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_placa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$veiculo.veiculos_modelo$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cnh$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_empresa$": { [Op.like]: `%${query}%` },
+      },
+      {
+        "$documento.doc_cpf$": { [Op.like]: `%${query}%` },
+      },
+    ],
+  };
+
+  Servicos.findAll({
+    where: whereCondition,
+    order: [["id", "ASC"]],
+    attributes: ["id", "entregas_nome"],
+    include: [
+      {
+        model: Veiculos,
+        required: true, // Corrigido de "require" para "required"
+        attributes: ["veiculos_placa", "veiculos_modelo"],
+      },
+      {
+        model: Documentos,
+        required: true, // Corrigido de "require" para "required"
+        attributes: ["doc_cnh", "doc_cpf", "doc_empresa"],
+      },
+      {
+        model: Telefones,
+        required: true, // Corrigido de "require" para "required"
+        attributes: ["telefone"],
+      },
+    ],
+  })
+    .then((servicos) => {
+      // Passando os dados de entregas para a visualização
+      res.render("consultarservicos", {
+        servicos: servicos, // Aqui você passa os dados para o EJS
+        msg: "", // Caso precise de uma mensagem
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.render("consultarservicos", {
+        servicos: [], // Caso ocorra algum erro, você pode passar um array vazio
+        msg: "Erro ao carregar as entregas.", // Mensagem de erro
+      });
+    });
+};
+
+exports.getOnePatio = (req, res, next) => {
+  const id = req.params.id;
+
+  // Buscar entrega com associações de veiculo, telefone e documento
+  Servicos.findByPk(id, {
+    include: [
+      {
+        model: Veiculos,
+        attributes: ["veiculos_placa", "veiculos_modelo"],
+      },
+      {
+        model: Telefones,
+        attributes: ["telefone"],
+      },
+      {
+        model: Documentos,
+        attributes: ["doc_cnh", "doc_cpf", "doc_empresa"],
+      },
+    ],
+  })
+    .then((entrega) => {
+      if (!entrega) {
+        return res.redirect("/entregas/entregascadastro"); // Redireciona se não encontrar a entrega
+      }
+
+      res.render("patioentregas", {
+        entrega: entrega, // Passa os dados da entrega para a view
+        msg: "",
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.redirect("/entregas/entregascadastro");
+    });
+};
