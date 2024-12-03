@@ -14,13 +14,13 @@
           RETIRADA DE CHAVES
         </div>
         <div class="card-body">
-          <form method="post" action="/chaves/registrochavecadastro">
+          <form method="post" action="/patio/rchave/">
             <div class="row gx-2 mb-2">
               <!-- Coluna para Entregador e Celular -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">
                   <input
-                    type="text"
+                    type="number"
                     name="chave_id"
                     class="form-control"
                     id="chave_id"
@@ -83,8 +83,9 @@
                     type="text"
                     name="rchave_telefone"
                     class="form-control"
-                    id="rchave_telefone"
+                    id="telefone"
                     placeholder="Celular"
+                    maxlength="15"
                   />
                   <label for="rchave_telefone">Celular</label>
                 </div>

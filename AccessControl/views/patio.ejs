@@ -133,9 +133,39 @@
                 <%= patio.bicicletario.telefone.telefone %>
               </td>
               <td><%= patio.bicicletario.status %></td>
-              <td class="placa"><%= patio.bicicletario.bike_cor %></td>
+              <td><%= patio.bicicletario.bike_cor %></td>
               <td>-</td>
               <td><%= patio.bicicletario.bike_loja %></td>
+              <td>
+                <form
+                  method="post"
+                  action="/patio/patio/<%= patio.id %>"
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Finalizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } else if (patio.registros_chave && patio.registros_chave.chave
+            && patio.registros_chave.chave.status === "Chaves") { %>
+            <!-- Exibindo a tabela para bicicletas -->
+            <tr>
+              <td>
+                <%= new Date(patio.patio_horaentrada).toLocaleString('pt-BR', {
+                month: 'short', day: '2-digit', hour: '2-digit', minute:
+                '2-digit' }) %>
+              </td>
+              <td><%= patio.registros_chave.rchave_nome.split(' ')[0] %></td>
+              <td class="telefone">
+                <%= patio.registros_chave.rchave_telefone ?
+                patio.registros_chave.rchave_telefone : '-' %>
+              </td>
+              <td><%= patio.registros_chave.chave.status%></td>
+              <td>-</td>
+              <td>-</td>
+              <td><%= patio.registros_chave.chave.chave_nome %></td>
               <td>
                 <form
                   method="post"
