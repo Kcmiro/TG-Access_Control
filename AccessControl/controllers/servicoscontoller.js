@@ -259,7 +259,7 @@ exports.getAllPatio = (req, res, next) => {
   const query = req.query.query || "";
   let whereCondition = {
     [Op.or]: [
-      { servicos_nome: { [Op.like]: `%${query}%` } },
+      { servico_nome: { [Op.like]: `%${query}%` } },
       {
         "$telefone.telefone$": { [Op.like]: `%${query}%` },
       },
@@ -284,7 +284,7 @@ exports.getAllPatio = (req, res, next) => {
   Servicos.findAll({
     where: whereCondition,
     order: [["id", "ASC"]],
-    attributes: ["id", "entregas_nome"],
+    attributes: ["id", "servico_nome"],
     include: [
       {
         model: Veiculos,
@@ -339,18 +339,18 @@ exports.getOnePatio = (req, res, next) => {
       },
     ],
   })
-    .then((entrega) => {
-      if (!entrega) {
-        return res.redirect("/entregas/entregascadastro"); // Redireciona se não encontrar a entrega
+    .then((servicos) => {
+      if (!servicos) {
+        return res.redirect("/servicos/servicoscadastro"); // Redireciona se não encontrar a entrega
       }
 
-      res.render("patioentregas", {
-        entrega: entrega, // Passa os dados da entrega para a view
+      res.render("patioservicos", {
+        servicos: servicos, // Passa os dados da entrega para a view
         msg: "",
       });
     })
     .catch((err) => {
       console.error(err);
-      res.redirect("/entregas/entregascadastro");
+      res.redirect("/servicos/servicoscadastro");
     });
 };

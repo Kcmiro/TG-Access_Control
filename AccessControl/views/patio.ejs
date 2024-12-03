@@ -10,13 +10,37 @@
         >
           PÁTIO
         </div>
-        <div class="form-floating d-flex justify-content-center rounded-4 pt-2">
-          <!-- Formulário de Pesquisa -->
+
+        <!-- Contadores em linha -->
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <!-- Card para Bike -->
+            <div class="alert alert-light border-dark w-25 text-center">
+              <strong>Bicicletas</strong>
+              <h4><%= contadorBike %></h4>
+            </div>
+
+            <!-- Card para Entregas -->
+            <div class="alert alert-light border-dark w-25 text-center">
+              <strong>Entregas</strong>
+              <h4><%= contadorEntregas %></h4>
+            </div>
+
+            <!-- Card para Serviços -->
+            <div class="alert alert-light border-dark w-25 text-center">
+              <strong>Serviços</strong>
+              <h4><%= contadorServicos %></h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário de Pesquisa -->
+        <div class="form-floating d-flex justify-content-center rounded-4">
           <form method="get" action="/patio/patio" class="d-flex">
             <input
               type="text"
               name="query"
-              class="form-control-sm text-center"
+              class="form-control-sm"
               placeholder="Consultar Patio..."
             />
             <button class="btn btn-success ms-1" type="submit">
@@ -24,6 +48,7 @@
             </button>
           </form>
         </div>
+
         <!-- Tabela de Resultados -->
         <table class="table table-striped">
           <thead>
@@ -40,9 +65,10 @@
           </thead>
           <tbody>
             <% if (patios && patios.length > 0) { %> <%
-            patios.forEach(function(patio) { %>
+            patios.forEach(function(patio) { %> <% if (patio.entrega &&
+            patio.entrega.status === "entregas") { %>
+            <!-- Exibindo a tabela para entregas -->
             <tr>
-              <!-- Exibindo os dados do patio -->
               <td>
                 <%= new Date(patio.patio_horaentrada).toLocaleString('pt-BR', {
                 month: 'short', day: '2-digit', hour: '2-digit', minute:
@@ -54,7 +80,6 @@
               <td class="placa"><%= patio.entrega.veiculo.veiculos_placa %></td>
               <td><%= patio.entrega.documento.doc_empresa.split(' ')[0] %></td>
               <td><%= patio.loja.lojaNome.split(' ')[0] %></td>
-              <!-- Acessando diretamente o nome da loja -->
               <td>
                 <form
                   method="post"
@@ -67,8 +92,63 @@
                 </form>
               </td>
             </tr>
-            <% }) %> <% } else { %>
-            <!-- Caso não haja registros -->
+            <% } else if (patio.servico && patio.servico.status === "servicos")
+            { %>
+            <!-- Exibindo a tabela para serviços -->
+            <tr>
+              <td>
+                <%= new Date(patio.patio_horaentrada).toLocaleString('pt-BR', {
+                month: 'short', day: '2-digit', hour: '2-digit', minute:
+                '2-digit' }) %>
+              </td>
+              <td><%= patio.servico.servico_nome.split(' ')[0] %></td>
+              <td class="telefone"><%= patio.servico.telefone.telefone %></td>
+              <td><%= patio.servico.status %></td>
+              <td class="placa"><%= patio.servico.veiculo.veiculos_placa %></td>
+              <td><%= patio.servico.documento.doc_empresa.split(' ')[0] %></td>
+              <td><%= patio.loja.lojaNome.split(' ')[0] %></td>
+              <td>
+                <form
+                  method="post"
+                  action="/patio/patio/<%= patio.id %>"
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Finalizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } else if (patio.bicicletario && patio.bicicletario.status ===
+            "bike") { %>
+            <!-- Exibindo a tabela para bicicletas -->
+            <tr>
+              <td>
+                <%= new Date(patio.patio_horaentrada).toLocaleString('pt-BR', {
+                month: 'short', day: '2-digit', hour: '2-digit', minute:
+                '2-digit' }) %>
+              </td>
+              <td><%= patio.bicicletario.bike_nome.split(' ')[0] %></td>
+              <td class="telefone">
+                <%= patio.bicicletario.telefone.telefone %>
+              </td>
+              <td><%= patio.bicicletario.status %></td>
+              <td class="placa"><%= patio.bicicletario.bike_cor %></td>
+              <td>-</td>
+              <td><%= patio.bicicletario.bike_loja %></td>
+              <td>
+                <form
+                  method="post"
+                  action="/patio/patio/<%= patio.id %>"
+                  class="d-inline-block"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Finalizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% } %> <% }); %> <% } else { %>
             <tr>
               <td colspan="8" class="text-center">Nenhum dado encontrado.</td>
             </tr>

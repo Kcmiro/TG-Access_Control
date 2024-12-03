@@ -18,4 +18,15 @@ router.post("/editarbicicletas/:id", checkLogin, bicicletarioController.update);
 
 router.post("/:id/excluir", checkLogin, bicicletarioController.delete);
 
+router.get(
+  "/consultarbicicletas",
+  checkLogin,
+  bicicletarioController.getAllPatio
+);
+router.get(
+  "/patiobicicletas/:id",
+  checkLogin,
+  bicicletarioController.getOnePatio
+);
+
 module.exports = router;

@@ -17,9 +17,9 @@ const chaves = connection.define("chaves", {
   status: {
     type: Sequelize.STRING,
     allowNull: true,
-    defaultValue: "chave",
+    defaultValue: "Chaves",
     validate: {
-      isIn: [["chave"]],
+      isIn: [["Chaves"]],
     },
   },
 });
@@ -36,6 +36,6 @@ chaves.beforeUpdate((chave, options) => {
   }
 });
 
-//chaves.sync({force: true});
+//chaves.sync({ force: true });
 
 module.exports = chaves;

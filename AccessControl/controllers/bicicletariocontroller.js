@@ -246,16 +246,16 @@ exports.getOnePatio = (req, res, next) => {
     .then((bicicletario) => {
       // Verifica se a bicicleta foi encontrada
       if (!bicicletario) {
-        return res.redirect("/bicicletario/listarbicicletas"); // Redireciona se não encontrar a bicicleta
+        return res.redirect("/bicicletario/bicicletariocadastro"); // Redireciona se não encontrar a bicicleta
       }
       // Renderiza a página de edição com os dados da bicicleta
-      res.render("editarbicicletas", {
+      res.render("patiobicicletas", {
         msg: "Bicicleta encontrada", // Mensagem para o usuário
         bicicletario: bicicletario, // Passando os dados da bicicleta para o formulário
       });
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/bicicletario/listarbicicletas"); // Em caso de erro, redireciona para a lista de bicicletas
+      res.redirect("/bicicletario/bicicletariocadastro"); // Em caso de erro, redireciona para a lista de bicicletas
     });
 };

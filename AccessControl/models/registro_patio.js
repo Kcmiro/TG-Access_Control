@@ -3,7 +3,7 @@ const connection = require("../database/database");
 const { toDefaultValue } = require("sequelize/lib/utils");
 
 const usuario = require("./usuario");
-const bicicletario = require("./registro_chave");
+const bicicletario = require("./bicicletario");
 const entregas = require("./entregas");
 const servico = require("./servicos");
 const registro_chave = require("./registro_chave");

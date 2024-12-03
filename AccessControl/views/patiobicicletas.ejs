@@ -10,7 +10,7 @@
           REGISTRAR BICICLETAS
         </div>
         <div class="card-body">
-          <form method="POST" action="/patio/<%= bicicletario.id %>">
+          <form method="POST" action="/patio/bike/<%= bicicletario.id %>">
             <div class="form-group mb-3">
               <label for="bike_nome">Nome</label>
               <input
@@ -62,7 +62,9 @@
             </div>
             <div class="d-flex justify-content-between">
               <button type="submit" class="btn btn-danger">Registrar</button>
-              <a href="/bicicletas/bicicletascadastro" class="btn btn-secondary"
+              <a
+                href="/bicicletario/bicicletascadastro"
+                class="btn btn-secondary"
                 >Cancelar</a
               >
             </div>
