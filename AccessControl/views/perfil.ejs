@@ -1,0 +1,64 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+<div class="container">
+  <div class="card position-absolute top-50 start-50 translate-middle col-3">
+    <div class="card-header bg-dark text-white font-weight-bold text-center">
+      ALTERAÇÃO DE SENHA
+    </div>
+    <div class="card-body">
+      <form
+        method="post"
+        action="/usuario/perfil"
+        class="d-flex flex-column align-items-center"
+      >
+        <!-- Senha Atual -->
+        <div class="form-floating mb-3 w-75">
+          <input
+            type="password"
+            name="senha_atual"
+            class="form-control"
+            id="senha_atual"
+            placeholder="Digite a senha atual"
+            required
+          />
+          <label for="senha_atual">Senha Atual</label>
+        </div>
+
+        <!-- Nova Senha -->
+        <div class="form-floating mb-3 w-75">
+          <input
+            type="password"
+            name="nova_senha"
+            class="form-control"
+            id="nova_senha"
+            placeholder="Digite a nova senha"
+            required
+          />
+          <label for="nova_senha">Nova Senha</label>
+        </div>
+
+        <!-- Confirmação da Nova Senha -->
+        <div class="form-floating mb-3 w-75">
+          <input
+            type="password"
+            name="confirmar_senha"
+            class="form-control"
+            id="confirmar_senha"
+            placeholder="Confirme a nova senha"
+            required
+          />
+          <label for="confirmar_senha">Confirmar Senha</label>
+        </div>
+
+        <div class="d-grid col-6">
+          <button type="submit" class="btn btn-success">Alterar Senha</button>
+        </div>
+
+        <!-- Exibe mensagens de erro se houver -->
+        <% if (msg != '') { %>
+        <div class="alert alert-danger mt-3" role="alert"><%= msg %></div>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('./partials/rodape.ejs') %>

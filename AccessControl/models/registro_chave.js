@@ -17,6 +17,14 @@ const registro_chave = connection.define("registros_chave", {
   rchave_observacao: {
     type: Sequelize.TEXT("long"),
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: "Chaves",
+    validate: {
+      isIn: [["Chaves"]],
+    },
+  },
 });
 
 registro_chave.belongsTo(chaves);

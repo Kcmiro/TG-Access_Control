@@ -3,6 +3,7 @@ const router = express.Router();
 
 const bicicletarioController = require("../controllers/bicicletariocontroller");
 const checkLogin = require("../middleware/checkLogin");
+const nivel = require("../middleware/verificarNivelAcesso");
 
 router.get(
   "/bicicletariocadastro",
@@ -16,7 +17,12 @@ router.get("/listarbicicletas", checkLogin, bicicletarioController.getAll);
 router.get("/editarbicicletas/:id", checkLogin, bicicletarioController.getOne);
 router.post("/editarbicicletas/:id", checkLogin, bicicletarioController.update);
 
-router.post("/:id/excluir", checkLogin, bicicletarioController.delete);
+router.post(
+  "/:id/excluir",
+  checkLogin,
+  nivel(["ADM", "CFTV"]),
+  bicicletarioController.delete
+);
 
 router.get(
   "/consultarbicicletas",

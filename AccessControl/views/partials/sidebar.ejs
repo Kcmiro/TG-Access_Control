@@ -165,7 +165,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="configuracoesMenu">
           <li>
-            <a href="/configuracoes/perfil" class="dropdown-item">Perfil</a>
+            <a href="/usuario/perfil" class="dropdown-item">Perfil</a>
           </li>
           <li>
             <a href="/usuario/novousuario" class="dropdown-item"
@@ -173,9 +173,7 @@
             >
           </li>
           <li>
-            <a href="/configuracoes/editarusuario" class="dropdown-item"
-              >Editar</a
-            >
+            <a href="/usuario/editarusuarios" class="dropdown-item">Editar</a>
           </li>
         </ul>
       </li>
@@ -198,3 +196,27 @@
   </div>
   <% } %>
 </nav>
+<!-- Popup de mensagem -->
+<div class="popup" id="popupMsg">
+  <p id="popupText"></p>
+</div>
+
+<script>
+  // Função para pegar o parâmetro 'msg' da URL
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Pega o parâmetro 'msg' da URL e exibe o popup
+  const msg = getQueryParam("msg");
+  if (msg) {
+    document.getElementById("popupText").innerText = msg;
+    document.getElementById("popupMsg").style.display = "block"; // Exibe o popup
+
+    // Fecha o popup após 5 segundos (opcional)
+    setTimeout(function () {
+      document.getElementById("popupMsg").style.display = "none";
+    }, 5000);
+  }
+</script>

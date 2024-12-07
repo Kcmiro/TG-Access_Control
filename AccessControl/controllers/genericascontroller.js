@@ -12,7 +12,7 @@ const Bicicletario = require("../models/bicicletario");
 exports.home = (req, res, next) => {
   if (req.session.Usuario) {
     // Passando a variável usuario para o template EJS
-    res.render("index", { Usuario: req.session.Usuario });
+    res.render("patio", { Usuario: req.session.Usuario });
   } else {
     res.redirect("/usuario/login");
   }

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const nivel = require("../middleware/verificarNivelAcesso");
 
 const servicoController = require("../controllers/servicoscontoller");
 const checkLogin = require("../middleware/checkLogin");
@@ -12,7 +13,12 @@ router.get("/listarservicos", checkLogin, servicoController.getAll);
 router.get("/editarservicos/:id", checkLogin, servicoController.getOne);
 router.post("/editarservicos/:id", checkLogin, servicoController.update);
 
-router.post("/:id/excluir", checkLogin, servicoController.delete);
+router.post(
+  "/:id/excluir",
+  checkLogin,
+  nivel(["ADM"]),
+  servicoController.delete
+);
 
 router.get("/consultarservicos", checkLogin, servicoController.getAllPatio);
 router.get("/patioservicos/:id", checkLogin, servicoController.getOnePatio);

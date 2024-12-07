@@ -4,7 +4,7 @@
   <div class="row min-vh-100">
     <!-- Conteúdo principal (Lado Direito) -->
     <div class="col-md-12 d-flex justify-content-center align-items-start pt-5">
-      <div class="card rounded-4" style="width: 100%; max-width: 400px">
+      <div class="card rounded-4" style="width: 100%; max-width: 450px">
         <div
           class="card-header bg-dark text-white font-weight-bold text-center"
         >
@@ -12,20 +12,18 @@
         </div>
         <div class="card-body">
           <form method="get" action="/bicicletario/consultarbicicletas">
-            <div
-              class="form-floating d-flex justify-content-center rounded-4 pt-1"
-            >
+            <div class="form-floating d-flex justify-content-center rounded-4">
               <input
                 type="text"
                 name="query"
                 class="class=form-control-sm"
                 placeholder="Verificar Registro...."
               />
-              <button class="btn btn-dark ms-1" type="submit">Consultar</button>
+              <button class="btn btn-dark ms-2" type="submit">Consultar</button>
             </div>
           </form>
           <form method="post" action="/bicicletario/bicicletariocadastro">
-            <div class="row gx-1 mb-2">
+            <div class="row gx-1 mb-2 pt-4">
               <!-- Coluna para Nome e Celular -->
               <div class="col-md-6 mb-2">
                 <div class="form-floating">

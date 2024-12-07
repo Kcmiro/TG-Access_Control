@@ -148,8 +148,8 @@
                 </form>
               </td>
             </tr>
-            <% } else if (patio.registros_chave && patio.registros_chave.chave
-            && patio.registros_chave.chave.status === "Chaves") { %>
+            <% } else if (patio.registro_chave && patio.registro_chave.chaves &&
+            patio.registro_chave.chave.status === "Chaves") { %>
             <!-- Exibindo a tabela para bicicletas -->
             <tr>
               <td>
@@ -157,15 +157,15 @@
                 month: 'short', day: '2-digit', hour: '2-digit', minute:
                 '2-digit' }) %>
               </td>
-              <td><%= patio.registros_chave.rchave_nome.split(' ')[0] %></td>
+              <td><%= patio.registro_chave.rchave_nome.split(' ')[0] %></td>
               <td class="telefone">
-                <%= patio.registros_chave.rchave_telefone ?
-                patio.registros_chave.rchave_telefone : '-' %>
+                <%= patio.registro_chave.rchave_telefone ?
+                patio.registro_chave.rchave_telefone : '-' %>
               </td>
-              <td><%= patio.registros_chave.chave.status%></td>
+              <td><%= patio.registro_chave.chave.status%></td>
               <td>-</td>
               <td>-</td>
-              <td><%= patio.registros_chave.chave.chave_nome %></td>
+              <td><%= patio.registro_chave.chave.chave_nome %></td>
               <td>
                 <form
                   method="post"

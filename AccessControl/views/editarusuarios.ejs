@@ -1,0 +1,45 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/sidebar.ejs') %>
+
+<div class="container mt-5">
+  <div class="card-header bg-dark text-white font-weight-bold text-center">
+    EXCLUIR USUARIOS
+  </div>
+
+  <% if (msg != '') { %>
+  <div class="alert alert-danger mt-3" role="alert"><%= msg %></div>
+  <% } %>
+
+  <!-- Tabela de Usuários -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome de Usuário</th>
+          <th scope="col">Nível</th>
+          <th scope="col">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% usuarios.forEach(usuario => { %>
+        <tr>
+          <td><%= usuario.id %></td>
+          <td><%= usuario.usuario_nome %></td>
+          <td><%= usuario.usuario_nivel %></td>
+          <td>
+            <a
+              href="/usuario/<%= usuario.id %>/excluir"
+              class="btn btn-danger btn-sm"
+              onclick="return confirm('Tem certeza que deseja excluir este usuário?')"
+            >
+              <i class="bi bi-trash"></i> Excluir
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('./partials/rodape.ejs') %>
